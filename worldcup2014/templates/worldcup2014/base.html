@@ -2,14 +2,27 @@
 <html lang="{{ LANGUAGE_CODE|default:"en-us" }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
 <head>
 <title>Bolao do Faisao 2014</title>
-<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}/worldcup2014/css/fifa.css" />
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}/worldcup2014/css/base.css" />
+<link href="{{ STATIC_URL }}/worldcup2014/css/bootstrap.min.css" rel="stylesheet">
+<link href="{{ STATIC_URL }}/worldcup2014/css/bootstrap-responsive.min.css" rel="stylesheet">
 </head>
 
 <body>
 
-{% block content %}
+	{% include 'worldcup2014/nav.html' %}
+	
+	
+	{% block content %}
 
-{% endblock %}
+	{% endblock %}
+
+    <p><hr></p>
+
+    <footer class="row">
+         <div class="span12" style="text-align: center;font-size: small">
+             <p>blalala</p>
+         </div>
+    </footer>
 
 </body>
 </html>
