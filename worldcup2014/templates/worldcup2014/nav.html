@@ -9,13 +9,17 @@
             <a class="brand" href="{% url 'match_index' %}">Bolao do Faisao 2014</a>
             <div class="nav-collapse collapse">
                 <ul class="nav">
-                    <li>
-                        <a href="{% url 'match_index' %}">Matchs</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'results' %}">Results</a>
-                    </li>
-					
+			        {% if user.is_authenticated %}
+					<li>
+						<a href="{% url 'match_index' %}">Matchs</a>
+					</li>
+					<li>
+						<a href="{% url 'results' %}">Results</a>
+					</li>					
+					<li>
+						<a href="{% url 'logout' %}">Logout</a>							
+					</li>
+					{% endif %}			
                 </ul>
             </div>
         </div>
