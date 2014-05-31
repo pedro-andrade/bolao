@@ -1,0 +1,16 @@
+{% extends 'worldcup2014/base.html' %}
+
+{% block content %}
+
+<h1>Match Details</h1>
+
+{% if match %}
+	<h2>{{ match.id }}</h2>
+	<h2>{{ match.teamA }} Vs {{ match.teamB }}</h2>
+	<h2>{{ match.striker }}</h2>	
+	<li><a href="{% url 'match_edit' match.id %}">edit</a></li>					
+{% else %}
+    <p>No match details available.</p>
+{% endif %}
+
+{% endblock %}

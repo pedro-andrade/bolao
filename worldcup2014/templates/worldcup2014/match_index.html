@@ -1,0 +1,18 @@
+{% extends 'worldcup2014/base.html' %}
+
+{% block content %}
+
+<h1>Match</h1>
+
+{% if list_match %}
+    <ul>
+    {% for match in list_match %}
+		<li><a href="{% url 'match_detail' match.id %}">{{ match.teamA }} Vs {{ match.teamB }}</a></li>				
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No matches are available.</p>
+{% endif %}
+
+
+{% endblock %}

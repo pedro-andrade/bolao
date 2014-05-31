@@ -1,0 +1,18 @@
+{% extends 'worldcup2014/base.html' %}
+
+
+{% block content %}
+<h1>Teams</h1>
+
+
+{% if list_teams %}
+    <ul>
+    {% for team in list_teams %}
+        <li>{{ team.name }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No teans are available.</p>
+{% endif %}
+
+{% endblock %}
