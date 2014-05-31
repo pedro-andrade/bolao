@@ -1,0 +1,8 @@
+body {
+    margin: 0;
+    padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+    font-size: 12px;
+    font-family: "Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif;
+    color: #333;
+    background: #fff;
+}
