@@ -8,7 +8,7 @@ urlpatterns = patterns('',
     url(r'^$', views.index),
 
     # using default django auth views with custom templates
-    url(r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'worldcup2014/login.html'}, name='login'),
+    url(r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'login.html'}, name='login'),
     url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page':'../'}, name='logout'),
 
     # url(r'^login/$', 'login', { 'template_name': 'registration/login.html'L }, name='login' ),
