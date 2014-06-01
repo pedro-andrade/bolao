@@ -18,8 +18,8 @@ def index(request):
 
 @login_required          
 def match_index(request):
-    list_match = Match.objects.all()
-    context = {'list_match': list_match}
+    match_list = Match.objects.all()
+    context = {'match_list': match_list}
     return render(request, 'match_index.html', context)    
 
 @login_required

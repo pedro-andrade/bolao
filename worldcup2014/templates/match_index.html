@@ -4,12 +4,17 @@
 
 <h1>Match</h1>
 
-{% if list_match %}
-    <ul>
-    {% for match in list_match %}
-		<li><a href="{% url 'match_detail' match.id %}">{{ match.teamA }} Vs {{ match.teamB }}</a></li>				
-    {% endfor %}
-    </ul>
+{% if match_list %}
+	<table id="metric-table" class="table table-striped table-bordered">
+		{% for match in match_list %}
+			<tr>
+				<td><a href="{% url 'match_detail' match.id %}">View</a></td>
+				<td>{{ match.teamA }}</td>
+				<td>{{ match.matchtime }}</td>
+				<td>{{ match.teamB }}</td>
+			</tr>
+		{% endfor %}
+	</table>
 {% else %}
     <p>No matches are available.</p>
 {% endif %}
