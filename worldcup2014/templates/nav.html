@@ -6,12 +6,12 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </a>
-            <a class="brand" href="{% url 'match_index' %}">Bolao do Faisao 2014</a>
+            <a class="brand" href="{% url 'match_index' %}"><img src="/static/img/logo_worldcup2014.png" height="40" width="40">Bolao do Faisao 2014</a>
             <div class="nav-collapse collapse">
                 <ul class="nav">
 			        {% if user.is_authenticated %}
 					<li>
-						<a href="{% url 'match_index' %}">Matchs</a>
+						<a href="{% url 'match_index' %}">Matches</a>
 					</li>
 					<li>
 						<a href="{% url 'results' %}">Results</a>
