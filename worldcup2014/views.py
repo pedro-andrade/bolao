@@ -4,7 +4,11 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate
 from django.contrib.auth import logout
 
+<<<<<<< HEAD
 from worldcup2014.models import Team, Player, Match, Vote
+=======
+from worldcup2014.models import Team, Player, Match, MatchStriker, Vote
+>>>>>>> FETCH_HEAD
 
 # def index(request):
 #     return HttpResponse("Hello, world. You're at the poll index.")
