@@ -6,7 +6,6 @@ from django.contrib.auth import logout
 
 from worldcup2014.models import Team, Player, Match, Vote
 
-
 # def index(request):
 #     return HttpResponse("Hello, world. You're at the poll index.")
 

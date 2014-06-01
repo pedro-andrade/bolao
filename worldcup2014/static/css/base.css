@@ -6,3 +6,52 @@ body {
     color: #333;
     background: #fff;
 }
+/*
+h1, h2, h3, h4, h5, h6
+{
+  font-weight: normal;
+  font-style: normal;
+  margin-top: 9px;
+  margin-right: 0px;
+  margin-bottom: 9px;
+  margin-left: 0px;
+  clear: both;
+  line-height: 1.2;
+}
+
+h2
+{
+  font-style: normal;
+  padding-left: 0px;
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+  border-bottom-color: #b9772e;
+}
+*/
+.match-list .match-list-date,
+.match-list .match-list-game {
+  margin-bottom: 40px;
+  margin-top: 20px;
+}
+.match-list .match-list-date h3,
+.match-list .match-list-game h3 {
+  color: #474747;
+  font-size: 21px;
+  line-height: 50px;
+  height: 50px;
+  padding-left: 10px;
+}
+.match-list .match-list-date h3 .h3-wrap,
+.match-list .match-list-game h3 .h3-wrap {
+  width: 988px;
+  height: 50px;
+  display: table-cell;
+  border-bottom: solid 1px #474747;
+}
+
+.h3-wrap {
+  width: 988px;
+  height: 50px;
+  display: table-cell;
+  border-bottom: solid 1px #474747;
+}
