@@ -4,7 +4,11 @@
 
 {% if vote %}
 
-<h3><img src="/static/img/flags/{{ match.teamA }}.png"> {{ match.teamA }} vs  {{ match.teamB }} <img src="/static/img/flags/{{ match.teamB }}.png"></h3>
+<h3>
+{{ match.matchtime|date:"l, d F Y" }}<br>
+<img src="/static/img/flags/{{ match.teamA }}.png"> {{ match.teamA | capfirst}} {{ match.matchtime|date:"H:i" }} {{ match.teamB | capfirst}} <img src="/static/img/flags/{{ match.teamB }}.png">
+</h3>
+<br><br>
 
 <table id="metric-table" class="table table-striped table-bordered">
 	<tr>
