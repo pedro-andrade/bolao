@@ -18,7 +18,7 @@ def index(request):
 
 @login_required          
 def match_index(request):
-    match_list = Match.objects.all()
+    match_list = Match.objects.all().order_by('matchtime')
     context = {'match_list': match_list}
     return render(request, 'match_index.html', context)    
 
