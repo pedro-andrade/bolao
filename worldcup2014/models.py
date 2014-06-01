@@ -38,4 +38,4 @@ class Vote(models.Model):
     score = models.CharField(max_length=200, blank=False)
     
     def __unicode__(self):
-        return "%d - %s " % (self.matchid, self.user)    
+        return "%s - %s " % (self.match, self.user)

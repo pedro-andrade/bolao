@@ -24,7 +24,8 @@ def match_index(request):
 @login_required
 def match_detail(request, match_id):
     match = Match.objects.get(pk=match_id)
-    return render(request, 'match_detail.html', {'match': match})
+    vote = Vote.objects.filter(match=match_id)
+    return render(request, 'match_detail.html', {'vote': vote, 'match':match})
 
 @login_required
 def match_edit(request, match_id):
