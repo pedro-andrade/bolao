@@ -2,14 +2,15 @@
 
 {% block content %}
 
-<h1>Edit Match Details</h1>
+    <form action="" class="form-horizontal" method="post">
+        {% csrf_token %}
+        <legend>Edit Vote</legend>
 
-{% if match %}
-	<h2>{{ match.id }}</h2>
-	<h2>{{ match.teamA }} Vs {{ match.teamB }}</h2>
-	<h2>{{ match.striker }}</h2>
-{% else %}
-    <p>No match details available.</p>
-{% endif %}
+        {{ vote_form }}
+        <br><br>
+        <p>
+            <input type="submit" class="btn btn-primary">
+        </p>
+    </form>
 
 {% endblock %}

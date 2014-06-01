@@ -17,7 +17,11 @@ urlpatterns = patterns('',
     # url(r'^$', views.login, name='login'),
     url(r'^match/$', views.match_index, name='match_index'),
     url(r'^match/(?P<match_id>\d+)/$', views.match_detail, name='match_detail'),
-    url(r'^match/edit/(?P<match_id>\d+)/$', views.match_edit, name='match_edit'),
+    url(r'^match/vote/add/$', views.create_or_update, name='vote_add'),
+    url(r'^match/vote/update/(?P<vote_id>\d+)/$', views.create_or_update, name='vote_update'),
+    
     url(r'^results/$', views.results, name='results'),    
     
+
+
 )

@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth import logout
 
 from worldcup2014.models import Team, Player, Match, MatchStriker, Vote
+from worldcup2014.forms import VoteForm
 
 # def index(request):
 #     return HttpResponse("Hello, world. You're at the poll index.")
@@ -40,5 +41,21 @@ def results(request):
 
 # def add(request, match_id=None):
          
+@login_required
+def create_or_update(request, vote_id=None):
+    if vote_id:
+        vote = Vote.objects.get(pk=vote_id)
+        action_msg, perm, object_perm = "updated", "worldcup2014.change_vote", vote
+    else:
+        vote = Vote()
+        action_msg, perm, object_perm = "created", "worldcup2014.add_vote", None
+
+    vote_form = VoteForm(request.POST or None, instance=vote)
+    if request.method == 'POST':
+        if vote_form.is_valid():
+            vote_instance = vote_form.save()
+
+    return render(request, "match_edit.html", {"vote_form": vote_form})
+
 
     
