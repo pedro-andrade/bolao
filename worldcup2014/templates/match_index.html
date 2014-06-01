@@ -10,7 +10,7 @@
 			<tr>
 				<td><a href="{% url 'match_detail' match.id %}">View</a></td>
 				<td><img src="/static/img/flags/{{ match.teamA }}.png"> {{ match.teamA }} </td>
-				<td>{{ match.matchtime }}</td>
+				<td>{{ match.matchtime|date:'Y-m-d H:i' }}</td>
 				<td>{{ match.teamB }} <img src="/static/img/flags/{{ match.teamB }}.png"> </td>
 			</tr>
 		{% endfor %}
