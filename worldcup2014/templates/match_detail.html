@@ -18,23 +18,19 @@
 		<td>Winner</td>
 		<td>Score</td></tr>
 	{% for v in vote %}
-		{% if user.username == v.user %}
 		<tr>
-			<td><a href="{% url 'match_edit' match.id %}">edit</a></td>
+			<td>
+			{% if user.username == v.user %}
+				<a href="{% url 'vote_update' v.id %}">edit</a>
+			{% else %}	
+				-
+			{% endif %}	
+			</td>
 			<td>{{ v.user }}</td>
 			<td>{{ v.striker }}</td>
 			<td>{{ v.winner }}</td>
 			<td>{{ v.score }}</td>
 		</tr>
-		{% else %}	
-		<tr>
-			<td>-</td>
-			<td>{{ v.user }}</td>
-			<td>{{ v.striker }}</td>
-			<td>{{ v.winner }}</td>
-			<td>{{ v.score }}</td>
-		</tr>
-		{% endif %}	
 	{% endfor %}
 </table>
 
