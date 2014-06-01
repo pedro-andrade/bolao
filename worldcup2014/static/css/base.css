@@ -6,48 +6,45 @@ body {
     color: #333;
     background: #fff;
 }
-/*
-h1, h2, h3, h4, h5, h6
-{
-  font-weight: normal;
-  font-style: normal;
-  margin-top: 9px;
-  margin-right: 0px;
-  margin-bottom: 9px;
-  margin-left: 0px;
-  clear: both;
-  line-height: 1.2;
+
+.table-bordered td.toRight { 
+	text-align: right; 
 }
 
-h2
-{
-  font-style: normal;
-  padding-left: 0px;
-  border-bottom-width: 2px;
-  border-bottom-style: solid;
-  border-bottom-color: #b9772e;
+.table-bordered td.toCenter { 
+	text-align: center; 
 }
-*/
-.match-list .match-list-date,
-.match-list .match-list-game {
-  margin-bottom: 40px;
-  margin-top: 20px;
+
+tableB {
+background-color: transparent;
+border-collapse: collapse;
+border-spacing: 0
 }
-.match-list .match-list-date h3,
-.match-list .match-list-game h3 {
-  color: #474747;
-  font-size: 21px;
-  line-height: 50px;
-  height: 50px;
-  padding-left: 10px;
+
+.tableB {
+margin-bottom: 20px
 }
-.match-list .match-list-date h3 .h3-wrap,
-.match-list .match-list-game h3 .h3-wrap {
-  width: 988px;
-  height: 50px;
-  display: table-cell;
-  border-bottom: solid 1px #474747;
+.tableB th,.tableB td {
+padding: 8px;
+line-height: 20px;
+text-align: left;
+vertical-align: top;
+border-top: 1px solid #ddd
 }
+.tableB th {
+font-weight: bold
+}
+.tableB thead th {
+vertical-align: bottom
+}
+.tableB caption+thead tr:first-child th,.tableB caption+thead tr:first-child td,.tableB colgroup+thead tr:first-child th,.tableB colgroup+thead tr:first-child td,.tableB thead:first-child tr:first-child th,
+.tableB thead:first-child tr:first-child td {
+border-top: 0
+}
+.tableB tbody+tbody {
+border-top: 2px solid #ddd
+}
+
 
 .h3-wrap {
   width: 988px;
