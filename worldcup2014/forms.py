@@ -20,6 +20,7 @@ class VoteForm(forms.ModelForm):
         self.fields['user'].label = u'User'
         self.fields['user'].required = True
         self.fields['user'].widget = forms.TextInput()
+        self.fields['user'].widget.attrs['readonly'] = True
 
         self.fields['striker'].label = u'Striker'
         self.fields['striker'].required = True
@@ -33,4 +34,3 @@ class VoteForm(forms.ModelForm):
         self.fields['score'].required = True
         self.fields['score'].widget = forms.TextInput()
 
- 

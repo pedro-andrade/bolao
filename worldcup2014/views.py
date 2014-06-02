@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate
 from django.contrib.auth import logout
+from django.contrib.auth.models import User 
 
 from worldcup2014.models import Team, Player, Match, MatchStriker, Vote
 from worldcup2014.forms import VoteForm
@@ -28,11 +29,6 @@ def match_detail(request, match_id):
     vote = Vote.objects.all().filter(match=match_id)
     return render(request, 'match_detail.html', {'vote': vote, 'match':match})
 
-@login_required
-def match_edit(request, match_id):
-    match = Match.objects.get(pk=match_id)
-    return render(request, 'match_edit.html', {'match': match})
-
 @login_required    
 def results(request):
   #  list_match = Match.objects.all()
@@ -42,12 +38,13 @@ def results(request):
 # def add(request, match_id=None):
          
 @login_required
-def create_or_update(request, vote_id=None):
+def match_vote(request, vote_id=None):
     if vote_id:
         vote = Vote.objects.get(pk=vote_id)
         action_msg, perm, object_perm = "updated", "worldcup2014.change_vote", vote
     else:
         vote = Vote()
+        vote.user = request.user
         action_msg, perm, object_perm = "created", "worldcup2014.add_vote", None
 
     vote_form = VoteForm(request.POST or None, instance=vote)
@@ -55,7 +52,7 @@ def create_or_update(request, vote_id=None):
         if vote_form.is_valid():
             vote_instance = vote_form.save()
 
-    return render(request, "match_edit.html", {"vote_form": vote_form})
+    return render(request, "match_vote.html", {"vote_form": vote_form})
 
 
     
