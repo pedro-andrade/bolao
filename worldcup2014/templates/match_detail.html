@@ -8,10 +8,13 @@
 {{ match.matchtime|date:"l, d F Y" }}<br>
 <img src="/static/img/flags/{{ match.teamA }}.png"> {{ match.teamA | capfirst}} {{ match.matchtime|date:"H:i" }} {{ match.teamB | capfirst}} <img src="/static/img/flags/{{ match.teamB }}.png">
 </h3>
-<br><br>
-Result: XXXX
 
-<br><br>
+{% if match.winner or match.score %}
+<p><span class="label">Winner:</span> {{ match.winner | capfirst }}</p>
+<p><span class="label">Score:</span> {{ match.score }}</p>
+players...
+{% endif %}	
+
 
 <table id="metric-table" class="table table-striped table-bordered">
 	<tr>

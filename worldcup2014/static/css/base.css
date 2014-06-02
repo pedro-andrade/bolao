@@ -7,6 +7,14 @@ body {
     background: #fff;
 }
 
+.control-group.required label {
+	font-weight: bold;
+}
+
+.formLabel {
+	font-weight: bold;
+}
+
 .table-bordered td.toRight { 
 	text-align: right; 
 }
@@ -14,6 +22,9 @@ body {
 .table-bordered td.toCenter { 
 	text-align: center; 
 }
+
+
+/*to be deleted*/
 
 tableB {
 background-color: transparent;
@@ -51,4 +62,41 @@ border-top: 2px solid #ddd
   height: 50px;
   display: table-cell;
   border-bottom: solid 1px #474747;
+}
+
+
+/*to be deleted*/
+
+.dl-horizontal dt {
+	width: auto;
+	white-space: inherit;
+}
+         
+.dl-horizontal dd:before {
+	content: "";
+	margin-left: 5px;
+}
+
+.dl-horizontal dd {
+	/* should be the same as line-height */
+	min-height: 20px;
+	margin-left: 0px;
+	margin-bottom: 0.5em;
+}
+
+.dl-horizontal dd:after {
+	/* clearfix */
+	content: " "; /* Older browser do not support empty content */
+	visibility: hidden;
+	display: block;
+	height: 0;
+	clear: both;
+}
+
+#state_filter span {
+	cursor: pointer;
+}
+
+#state_filter span.selected {
+	font-size: 1.2em;
 }
