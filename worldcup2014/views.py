@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth import logout
 from django.contrib.auth.models import User 
 from django.shortcuts import get_object_or_404, render, redirect
+from django.contrib import messages
 
 from worldcup2014.models import Team, Player, Match, MatchStriker, Vote
 from worldcup2014.forms import VoteForm
@@ -73,22 +74,34 @@ def _get_score_points(vote_id):
         return 2
     else:
         return 0
-         
+
+
 @login_required
-def match_vote(request, vote_id=None):
-    if vote_id:
-        vote = Vote.objects.get(pk=vote_id)
-        action_msg, perm, object_perm = "updated", "worldcup2014.change_vote", vote
-    else:
-        vote = Vote()
-        vote.user = request.user
-        action_msg, perm, object_perm = "created", "worldcup2014.add_vote", None
+def update_vote(request, vote_id):
+
+    vote = Vote.objects.get(pk=vote_id)
 
     vote_form = VoteForm(request.POST or None, instance=vote)
     if request.method == 'POST':
         if vote_form.is_valid():
-            vote_instance = vote_form.save()
-            return redirect('match_detail', vote.match)
+            vote_form.save()
+            messages.success(request, 'Successfully updated vote for match %s' % (vote_form.instance.match))
+            return redirect('match_detail', vote.match.id)
 
     return render(request, "match_vote.html", {"vote_form": vote_form})
 
+@login_required
+def add_vote(request, match_id):
+    vote = Vote()
+    vote.user = request.user
+    match = Match.objects.get(pk=match_id)
+    vote.match = match
+
+    vote_form = VoteForm(request.POST or None, instance=vote)
+    if request.method == 'POST':
+        if vote_form.is_valid():
+            vote_form.save()
+            messages.success(request, 'Successfully added vote for match %s' % (vote_form.instance.match))            
+            return redirect('match_detail', vote.match.id)
+
+    return render(request, "match_vote.html", {"vote_form": vote_form})

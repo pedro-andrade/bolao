@@ -39,7 +39,7 @@
 		</tr>
 	{% endfor %}
     {% if not uservote %}
-		<tr><td colspan="5"><a href="{% url 'vote_add' %}">Vote Now !!!</a></td></tr>
+		<tr><td colspan="5"><a href="{% url 'vote_add' match.id %}">Vote Now !!!</a></td></tr>
     {% endif %}	
 </table>
 

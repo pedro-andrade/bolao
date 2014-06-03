@@ -21,14 +21,14 @@ class Match(models.Model):
     score = models.CharField(max_length=200, blank=True)
 
     def __unicode__(self):
-        return "%d" % (self.id)
+        return "%s - %s" % (self.teamA, self.teamB)
 
 class MatchStriker(models.Model):
     match = models.ForeignKey(Match, blank=False)
     striker = models.ForeignKey(Player, blank=False)
 
     def __unicode__(self):
-        return "%d" % (self.id)
+        return "%s - %s" % (self.match, self.striker)
 
 class Vote(models.Model):
     match = models.ForeignKey(Match)
@@ -38,4 +38,4 @@ class Vote(models.Model):
     score = models.CharField(max_length=200, blank=False)
     
     def __unicode__(self):
-        return "%d" % (self.id)
+        return "%s - %s" % (self.match, self.user)
