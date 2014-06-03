@@ -31,11 +31,45 @@ def match_detail(request, match_id):
 
 @login_required    
 def results(request):
-  #  list_match = Match.objects.all()
-  #  context = {'list_match': list_match}
-    return render(request, 'results.html')#, context)    
+    points = {}
+    user = User.objects.all()
+    for u in user:
+        vote = Vote.objects.all().filter(user=u)
+        counter1 = 0
+        counter2 = 0
+        counter3 = 0
+        for v in vote:
+            counter1 += _get_striker_points(v.id)
+            counter2 += _get_winner_points(v.id)
+            counter3 += _get_score_points(v.id)
+            tmp = {'striker': counter1, 'winner': counter2, 'score': counter3, 'total': counter1+counter2+counter3 }
+        points[u]=tmp
+    print points
+    return render(request, 'results.html', {'points': points})
 
-# def add(request, match_id=None):
+def _get_striker_points(vote_id):
+    vote = Vote.objects.get(pk=vote_id)
+    striker = MatchStriker.objects.filter(match=vote.match)
+    for s in striker:
+        if s.striker == vote.striker:
+            return 2
+    return 0
+
+def _get_winner_points(vote_id):
+    vote = Vote.objects.get(pk=vote_id)
+    match = vote.match
+    if match.winner == vote.winner:
+        return 1
+    else:
+        return 0
+
+def _get_score_points(vote_id):
+    vote = Vote.objects.get(pk=vote_id)
+    match = vote.match
+    if match.score == vote.score:
+        return 2
+    else:
+        return 0
          
 @login_required
 def match_vote(request, vote_id=None):
@@ -53,6 +87,3 @@ def match_vote(request, vote_id=None):
             vote_instance = vote_form.save()
 
     return render(request, "match_vote.html", {"vote_form": vote_form})
-
-
-    

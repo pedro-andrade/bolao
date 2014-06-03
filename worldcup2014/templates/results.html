@@ -4,11 +4,27 @@
 
 <h1>Results Details</h1>
 
-{% if match %}
-	<h2>{{ match.id }}</h2>
-	<h2>{{ match.teamA }} Vs {{ match.teamB }}</h2>
-	<h2>{{ match.striker }}</h2>	
-	<li><a href="{% url 'match_edit' match.id %}">edit</a></li>					
+{% if points %}
+
+<table id="metric-table" class="table table-striped table-bordered">
+    <tr>
+        <th></th>
+        <th>Striker</th>
+        <th>Winner</th>
+        <th>Score</th>
+        <th>Total</th>
+    </tr>
+    {% for p, v in points.items %}
+    <tr>
+        <td>{{ p }}</td>
+        <td>{{ v.striker }}</td>
+        <td>{{ v.winner }}</td>
+        <td>{{ v.score }}</td>
+        <td>{{ v.total }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
 {% else %}
     <p>No match details available.</p>
 {% endif %}
