@@ -11,8 +11,8 @@ class Player(models.Model):
     team = models.ForeignKey(Team)
 
     def __unicode__(self):
-        return self.name
-        
+        return "%s (%s)" % (self.name, self.team)
+
 class Match(models.Model):
     teamA = models.ForeignKey(Team, related_name='teamA', blank=False)
     teamB = models.ForeignKey(Team, related_name='teamB', blank=False)
@@ -21,7 +21,7 @@ class Match(models.Model):
     score = models.CharField(max_length=200, blank=True)
 
     def __unicode__(self):
-        return "%s - %s" % (self.teamA, self.teamB)
+        return "%s vs %s" % (self.teamA, self.teamB)
 
 class MatchStriker(models.Model):
     match = models.ForeignKey(Match, blank=False)

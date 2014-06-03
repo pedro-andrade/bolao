@@ -17,12 +17,12 @@ class VoteForm(forms.ModelForm):
         
     def __init__(self, *args, **kwargs):
         super(VoteForm, self).__init__(*args, **kwargs)
-        
-        self.fields['striker'].queryset = Player.objects.all()
-        self.fields['winner'].queryset = Team.objects.all()
-        
 
         instance = getattr(self, 'instance', None)
+        
+        self.fields['striker'].queryset = Player.objects.filter(team=instance.match.teamA) | Player.objects.filter(team=instance.match.teamB)
+        self.fields['winner'].queryset = Team.objects.filter(name=instance.match.teamA.name) | Team.objects.filter(name=instance.match.teamB.name) | Team.objects.filter(name='-')
+        
         if instance and instance.match:
             self.fields['match'].label = u'Match'
             self.fields['match'].required = False
@@ -35,7 +35,6 @@ class VoteForm(forms.ModelForm):
 
         self.fields['striker'].label = u'Striker'
         self.fields['striker'].required = True
-       # self.fields['striker'].widget = forms.ChoiceField()#choices=self.fields['striker'].choices)
 
         self.fields['winner'].label = u'Winner'
         self.fields['winner'].required = True

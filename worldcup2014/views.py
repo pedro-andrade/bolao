@@ -42,6 +42,7 @@ def results(request):
         counter1 = 0
         counter2 = 0
         counter3 = 0
+        tmp = {} 
         for v in vote:
             counter1 += _get_striker_points(v.id)
             counter2 += _get_winner_points(v.id)
@@ -78,7 +79,6 @@ def _get_score_points(vote_id):
 
 @login_required
 def update_vote(request, vote_id):
-
     vote = Vote.objects.get(pk=vote_id)
 
     vote_form = VoteForm(request.POST or None, instance=vote)
