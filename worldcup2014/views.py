@@ -1,9 +1,9 @@
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate
 from django.contrib.auth import logout
 from django.contrib.auth.models import User 
+from django.shortcuts import get_object_or_404, render, redirect
 
 from worldcup2014.models import Team, Player, Match, MatchStriker, Vote
 from worldcup2014.forms import VoteForm
@@ -85,5 +85,7 @@ def match_vote(request, vote_id=None):
     if request.method == 'POST':
         if vote_form.is_valid():
             vote_instance = vote_form.save()
+            return redirect('match_detail', vote.match)
 
     return render(request, "match_vote.html", {"vote_form": vote_form})
+
