@@ -5,16 +5,23 @@
 <h1>Match</h1>
 
 {% if match_list %}
-	<table id="metric-table" class="table table-striped table-bordered">
-		{% for match in match_list %}
-           	<tr>
-				<td><a href="{% url 'match_detail' match.id %}">View</a></td>
-				<td><img src="/static/img/flags/{{ match.teamA }}.png"> {{ match.teamA | capfirst}} </td>
-				<td class="toCenter">{{ match.matchtime|date:"l, d F Y  H:i" }}</td>
-				<td class="toRight">{{ match.teamB | capfirst}} <img src="/static/img/flags/{{ match.teamB }}.png"> </td>
+
+	{% regroup match_list|dictsort:"matchtime" by matchtime|date:"l, d F Y" as matchByDay %}
+	{% for matchDay in matchByDay %}
+        <legend>{{ matchDay.grouper }}</legend>
+
+		<table id="metric-table" class="table table-striped table-bordered">
+        {% for match in matchDay.list %}
+        	<tr>
+				<td width="20%"><a href="{% url 'match_detail' match.id %}">View</a></td>
+				<td width="20%"><img src="/static/img/flags/{{ match.teamA }}.png"> {{ match.teamA | capfirst}} </td>
+				<td width="20%" class="toCenter">{{ match.matchtime|date:"H:i" }}</td>
+				<td width="20%" class="toRight">{{ match.teamB | capfirst}} <img src="/static/img/flags/{{ match.teamB }}.png"> </td>
 			</tr>
-		{% endfor %}
-	</table>
+        {% endfor %}
+		</table>
+	{% endfor %}
+
 {% else %}
     <p>No matches are available.</p>
 {% endif %}
