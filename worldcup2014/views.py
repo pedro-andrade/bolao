@@ -27,9 +27,10 @@ def match_index(request):
 def match_detail(request, match_id):
     match = Match.objects.get(pk=match_id)
     vote = Vote.objects.all().filter(match=match_id)
+    strikers = MatchStriker.objects.all().filter(match=match_id)
     uservote = Vote.objects.all().filter(match=match_id, user=request.user)
-    print uservote
-    return render(request, 'match_detail.html', {'vote': vote, 'match':match, 'uservote':uservote})
+    print strikers
+    return render(request, 'match_detail.html', {'vote': vote, 'match':match, 'strikers':strikers, 'uservote':uservote})
 
 @login_required    
 def results(request):

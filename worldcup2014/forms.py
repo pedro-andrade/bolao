@@ -1,7 +1,7 @@
 from django import forms
 from django.utils.safestring import mark_safe
 
-from worldcup2014.models import Vote, Player, Team
+from worldcup2014.models import Vote, Player, Team, Match
 from django.core.exceptions import ValidationError
 
 ## SENSOR
@@ -17,16 +17,17 @@ class VoteForm(forms.ModelForm):
         
     def __init__(self, *args, **kwargs):
         super(VoteForm, self).__init__(*args, **kwargs)
-        self.fields['striker'].queryset = Player.objects.filter(id=1)
+
+        self.fields['striker'].queryset = Player.objects.all()
         self.fields['winner'].queryset = Team.objects.all()
         
         self.fields['match'].label = u'Match'
-        self.fields['match'].widget.attrs['readonly'] = True
+        self.fields['match'].widget.attrs['disabled'] = True
 
         self.fields['user'].label = u'User'
         self.fields['user'].required = True
         self.fields['user'].widget = forms.TextInput()
-        self.fields['user'].widget.attrs['readonly'] = True
+        self.fields['user'].widget.attrs['disabled'] = True
 
         self.fields['striker'].label = u'Striker'
         self.fields['striker'].required = True

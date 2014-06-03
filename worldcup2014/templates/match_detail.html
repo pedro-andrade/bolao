@@ -2,7 +2,7 @@
 
 {% block content %}
 
-{% if vote %}
+{% if match %}
 
 <h3>
 {{ match.matchtime|date:"l, d F Y" }}<br>
@@ -10,9 +10,9 @@
 </h3>
 
 {% if match.winner or match.score %}
-<p><span class="label">Winner:</span> {{ match.winner | capfirst }}</p>
-<p><span class="label">Score:</span> {{ match.score }}</p>
-players...
+<p><span class="label">Winner</span> {{ match.winner | capfirst }}</p>
+<p><span class="label">Score</span> {{ match.score }}</p>
+<p><span class="label">Strikers</span> {% for stk in strikers %}{{ stk.striker }} {% endfor %}</p>
 {% endif %}	
 
 <table id="metric-table" class="table table-striped table-bordered" border=0>
