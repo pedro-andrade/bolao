@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import RegexValidator
             
 class Team(models.Model):
     name = models.CharField(max_length=200, unique=True)
@@ -18,7 +19,7 @@ class Match(models.Model):
     teamB = models.ForeignKey(Team, related_name='teamB', blank=False)
     matchtime = models.DateTimeField('Date')
     winner = models.ForeignKey(Team, related_name='winner', blank=True)
-    score = models.CharField(max_length=200, blank=True)
+    score = models.CharField(max_length=200, blank=True, validators=[RegexValidator('^[0-9]-[0-9]$', message='please fix score format (e.g. 0-0)', code='invalid score')])
 
     def __unicode__(self):
         return "%s vs %s" % (self.teamA, self.teamB)
@@ -35,7 +36,7 @@ class Vote(models.Model):
     user = models.CharField(max_length=200, blank=False)
     striker = models.ForeignKey(Player, related_name='strikerVote', blank=False)
     winner = models.ForeignKey(Team, related_name='winnerVote', blank=False)
-    score = models.CharField(max_length=200, blank=False)
+    score = models.CharField(max_length=200, blank=False, validators=[RegexValidator('^[0-9]-[0-9]$', message='please fix score format (e.g. 0-0)', code='invalid score')])
     
     def __unicode__(self):
         return "%s - %s" % (self.match, self.user)
