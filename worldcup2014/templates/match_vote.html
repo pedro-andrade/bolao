@@ -4,6 +4,13 @@
 
     <form action="" class="form-horizontal" method="post">
         {% csrf_token %}
+
+		<h3>
+			{{ vote_form.instance.match.matchtime|date:"l, d F Y" }}<br>
+			<img src="/static/img/flags/{{ vote_form.instance.match.teamA }}.png"> {{ vote_form.instance.match.teamA | capfirst}} {{ vote_form.instance.match.matchtime|date:"H:i" }} 
+			{{ vote_form.instance.match.teamB | capfirst}} <img src="/static/img/flags/{{ vote_form.instance.match.teamB }}.png">
+		</h3>
+
         <legend>Edit Vote</legend>
 
         {{ vote_form }}
