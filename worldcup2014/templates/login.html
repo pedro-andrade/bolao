@@ -3,15 +3,16 @@
 {% block content %}
 
 {%if form.errors %}
-<p> Invalid username/password combination, please try again </p>
+	<p> Invalid username/password combination, please try again </p>
 {% endif %}
 
 <h1>Welcome to My Site!</h1>
-<form action="{% url 'django.contrib.auth.views.login' %}" method="post">
+<form action="{% url 'django.contrib.auth.views.login' %}" class="form-horizontal" method="post">
 {% csrf_token %}
     {{form.username.label_tag}}{{form.username}}
     {{form.password.label_tag}}{{form.password}}
-    <input type="submit" id="submit" name="submit" value="Sign in" />
+    <br><br>
+    <input type="submit" id="submit" name="submit" value="Sign in" class="btn btn-primary"/>
     <input type="hidden" name="next" value="../match/" /> 
 </form>
 
