@@ -6,7 +6,7 @@
 	<p> Invalid username/password combination, please try again </p>
 {% endif %}
 
-<h1>Welcome to My Site!</h1>
+<h1>Welcome to Bolao do Faisao 2014!</h1>
 <form action="{% url 'django.contrib.auth.views.login' %}" class="form-horizontal" method="post">
 {% csrf_token %}
     {{form.username.label_tag}}{{form.username}}

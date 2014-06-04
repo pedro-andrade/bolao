@@ -2,8 +2,6 @@
 
 {% block content %}
 
-<h1>Match</h1>
-
 {% if match_list %}
 
 	{% regroup match_list|dictsort:"matchtime" by matchtime|date:"l, d F Y" as matchByDay %}

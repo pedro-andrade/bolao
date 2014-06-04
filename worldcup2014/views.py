@@ -12,7 +12,7 @@ from worldcup2014.forms import VoteForm
 # def index(request):
 #     return HttpResponse("Hello, world. You're at the poll index.")
 
-from django.contrib.auth import authenticate, login
+from datetime import datetime
 
 # index view (just redirect to login page)
 def index(request):
@@ -20,7 +20,15 @@ def index(request):
 
 @login_required          
 def match_index(request):
-    match_list = Match.objects.all().order_by('matchtime')
+    print datetime.now()
+    match_list = Match.objects.filter(matchtime__gte=datetime.now()).order_by('matchtime')
+    context = {'match_list': match_list}
+    return render(request, 'match_index.html', context)    
+
+@login_required          
+def match_history(request):
+    print datetime.now()
+    match_list = Match.objects.filter(matchtime__lt=datetime.now()).order_by('matchtime')
     context = {'match_list': match_list}
     return render(request, 'match_index.html', context)    
 
