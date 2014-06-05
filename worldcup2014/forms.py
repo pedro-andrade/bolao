@@ -18,10 +18,10 @@ class VoteForm(forms.ModelForm):
         super(VoteForm, self).__init__(*args, **kwargs)
 
         instance = getattr(self, 'instance', None)
-        print user
         
-        self.fields['striker'].queryset = Player.objects.filter(team=instance.match.teamA) | Player.objects.filter(team=instance.match.teamB)
-        self.fields['winner'].queryset = Team.objects.filter(name=instance.match.teamA.name) | Team.objects.filter(name=instance.match.teamB.name) | Team.objects.filter(name='-')
+        _team = Team.objects.get(name='-')
+        self.fields['striker'].queryset = (Player.objects.filter(team=instance.match.teamA) | Player.objects.filter(team=instance.match.teamB) | Player.objects.filter(team=_team)).order_by('-team')
+        self.fields['winner'].queryset = Team.objects.filter(name=instance.match.teamA.name) | Team.objects.filter(name=instance.match.teamB.name) | Team.objects.filter(name='-').order_by('name')
 
         self.fields['striker'].label = u'Striker'
         self.fields['striker'].required = True
