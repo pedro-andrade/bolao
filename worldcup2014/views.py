@@ -1,12 +1,10 @@
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate
-from django.contrib.auth import logout
 from django.contrib.auth.models import User 
-from django.shortcuts import get_object_or_404, render, redirect
+from django.shortcuts import render, redirect
 from django.contrib import messages
 
-from worldcup2014.models import Team, Player, Match, MatchStriker, Vote
+from worldcup2014.models import Match, MatchStriker, Vote
 from worldcup2014.forms import VoteForm
 
 # def index(request):
@@ -86,11 +84,16 @@ def _get_score_points(vote_id):
 
 
 @login_required
-def update_vote(request, vote_id):
-    vote = Vote.objects.get(pk=vote_id)
+def vote_update(request, vote_id):
+    
+    try:
+        vote = Vote.objects.get(pk=vote_id)
+    except Exception:
+        messages.error(request, 'You can not update vote that doesn\'t exist')
+        return redirect('match_index')
     
     if request.user.username != vote.user :
-        messages.error(request, 'Can not update vote of another user')
+        messages.error(request, 'You can not update vote of another user')
         return redirect('match_detail', vote.match.id)
 
     vote_form = VoteForm(request.POST or None, instance=vote, user=request.user)
@@ -104,14 +107,22 @@ def update_vote(request, vote_id):
     return render(request, "match_vote.html", {"vote_form": vote_form})
 
 @login_required
-def add_vote(request, match_id):
+def vote_add(request, match_id):
     
-    #TODO add a check that doesn't allow to add a new vote if the user already has one    
-    match = Match.objects.get(pk=match_id)
-    isVote = Vote.objects.all().filter(user=request.user, match=match)
+    try:
+        match = Match.objects.get(pk=match_id)
+    except Exception:
+        messages.error(request, 'You can not add vote to a match that doesn\'t exist')
+        return redirect('match_index')
+    
+    try:
+        isVote = Vote.objects.get(user=request.user, match=match.id)
+    except Exception:
+        isVote = None
+
     if isVote:
-        redirect('match_detail', isVote.match.id)
-        
+        return redirect('vote_update', isVote.id)
+
     vote = Vote()
     vote.user = request.user
     vote.match = match
