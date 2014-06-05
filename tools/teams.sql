@@ -1686,4 +1686,6 @@ UPDATE worldcup2014_player SET team_id = (SELECT id FROM worldcup2014_team where
 INSERT INTO worldcup2014_player VALUES (827, 'ChristianStuani', '');
 UPDATE worldcup2014_player SET team_id = (SELECT id FROM worldcup2014_team where name='uruguay') WHERE id = 827;
 INSERT INTO worldcup2014_team VALUES (33, '-');
+INSERT INTO worldcup2014_player VALUES (828, 'AsmirBegović', '');
+UPDATE worldcup2014_player SET team_id = (SELECT id FROM worldcup2014_team where name='-') WHERE id = 828;
 COMMIT;
