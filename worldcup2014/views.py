@@ -41,6 +41,7 @@ def match_detail(request, match_id):
 
 @login_required    
 def results(request):
+    #TODO only votes of match flagged as finish in the database (finish means ready for the calculation of the results otherwise we could use the matchtime field)
     points = {}
     user = User.objects.all()
     for u in user:
