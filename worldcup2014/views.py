@@ -105,9 +105,15 @@ def update_vote(request, vote_id):
 
 @login_required
 def add_vote(request, match_id):
+    
+    #TODO add a check that doesn't allow to add a new vote if the user already has one    
+    match = Match.objects.get(pk=match_id)
+    isVote = Vote.objects.all().filter(user=request.user, match=match)
+    if isVote:
+        redirect('match_detail', isVote.match.id)
+        
     vote = Vote()
     vote.user = request.user
-    match = Match.objects.get(pk=match_id)
     vote.match = match
 
     vote_form = VoteForm(request.POST or None, instance=vote)
