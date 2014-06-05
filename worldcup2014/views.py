@@ -88,8 +88,13 @@ def _get_score_points(vote_id):
 @login_required
 def update_vote(request, vote_id):
     vote = Vote.objects.get(pk=vote_id)
+    
+    if request.user.username != vote.user :
+        messages.error(request, 'Can not update vote of another user')
+        return redirect('match_detail', vote.match.id)
 
-    vote_form = VoteForm(request.POST or None, instance=vote)
+    vote_form = VoteForm(request.POST or None, instance=vote, user=request.user)
+
     if request.method == 'POST':
         if vote_form.is_valid():
             vote_form.save()
