@@ -27,6 +27,9 @@ urlpatterns = patterns('',
    
     url(r'^results/$', views.results, name='results'),    
     
+    url(r'^rules/$', views.rules, name='rules'),    
+    
+    url(r'^extra/$', views.extra_vote, name='extra_vote'),    
 
 
 )

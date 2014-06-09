@@ -216,3 +216,12 @@ def match_add(request):
             return redirect('match_detail', match.id)
 
     return render(request, "match_update.html", {"match_form": match_form})
+
+
+@login_required          
+def rules(request):
+    return render(request, 'rules.html')    
+
+@login_required          
+def extra_vote(request):
+    return render(request, 'extra_vote.html')    
