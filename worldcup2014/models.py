@@ -13,7 +13,7 @@ class Player(models.Model):
     team = models.ForeignKey(Team)
     
     def __unicode__(self):
-        return "%s (%s)" % (self.name, self.team)
+        return "%s - %s" % (self.team, self.name)
     
 class Match(models.Model):
     teamA = models.ForeignKey(Team, related_name='teamA', blank=False)
@@ -51,7 +51,7 @@ class ExtraVote(models.Model):
     winner = models.ForeignKey(Team, related_name='winnerExtraVote', blank=False)
     
     def __unicode__(self):
-        return "%s - %s - %s" % (self.user, self.striker, self.winner)
+        return "%s" % (self.user)
     
 class Comment(models.Model):
     user = models.CharField(max_length=200, blank=False)

@@ -32,8 +32,7 @@
 	{% if not uservote %}
 		<tr>
 			<td colspan="4">
-				Vote Now !!!
-				{#<a href="{% url 'vote_add' match.id %}">Vote Now !!!</a>#}
+				<a href="{% url 'extra_vote_add' %}">Vote Now !!!</a>
 			</td>
 		</tr>
     {% endif %}

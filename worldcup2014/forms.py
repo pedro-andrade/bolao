@@ -20,7 +20,7 @@ class VoteForm(forms.ModelForm):
         instance = getattr(self, 'instance', None)
         
         _team = Team.objects.get(name='-')
-        self.fields['striker'].queryset = (Player.objects.filter(team=instance.match.teamA) | Player.objects.filter(team=instance.match.teamB) | Player.objects.filter(team=_team)).order_by('-team')
+        self.fields['striker'].queryset = (Player.objects.filter(team=instance.match.teamA) | Player.objects.filter(team=instance.match.teamB) | Player.objects.filter(team=_team)).order_by('-team','name')
         self.fields['winner'].queryset = Team.objects.filter(name=instance.match.teamA.name) | Team.objects.filter(name=instance.match.teamB.name) | Team.objects.filter(name='-').order_by('name')
 
         self.fields['striker'].label = u'Striker'
@@ -51,12 +51,11 @@ class ExtraVoteForm(forms.ModelForm):
     class Meta:
         model = ExtraVote
         fields = ('striker', 'winner')
-        #exclude = ('user')
         
     def __init__(self, *args, **kwargs):
         super(ExtraVoteForm, self).__init__(*args, **kwargs)
 
-        self.fields['striker'].queryset = Player.objects.all().order_by('team')
+        self.fields['striker'].queryset = Player.objects.all().order_by('team','name')
         self.fields['winner'].queryset = Team.objects.all().order_by('name')
         
        

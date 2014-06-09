@@ -229,7 +229,31 @@ def extra_vote_update(request, extra_vote_id):
     if request.method == 'POST':
         if extra_vote_form.is_valid():
             extra_vote_form.save()
-            messages.success(request, 'Successfully updated extra vote %s' % (extra_vote_form.instance))
+            messages.success(request, 'Successfully updated extra vote')
+            return redirect('extra_vote')
+
+    return render(request, "extra_vote_update.html", {"extra_vote_form": extra_vote_form})
+
+@login_required
+def extra_vote_add(request):
+        
+    try:
+        isVote = ExtraVote.objects.get(user=request.user)
+    except Exception:
+        isVote = None
+
+    if isVote:
+        return redirect('extra_vote_update', isVote.id)
+
+    vote = ExtraVote()
+    vote.user = request.user
+
+    extra_vote_form = ExtraVoteForm(request.POST or None, instance=vote)
+    
+    if request.method == 'POST':
+        if extra_vote_form.is_valid():
+            extra_vote_form.save()
+            messages.success(request, 'Successfully added extra vote')            
             return redirect('extra_vote')
 
     return render(request, "extra_vote_update.html", {"extra_vote_form": extra_vote_form})
