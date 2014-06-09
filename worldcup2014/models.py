@@ -51,4 +51,4 @@ class ExtraVote(models.Model):
     winner = models.ForeignKey(Team, related_name='winnerExtraVote', blank=False)
     
     def __unicode__(self):
-        return "%s - %s" % (self.user, self.striker, self.winner)
+        return "%s - %s - %s" % (self.user, self.striker, self.winner)
