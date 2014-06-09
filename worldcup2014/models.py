@@ -3,7 +3,8 @@ from django.core.validators import RegexValidator
             
 class Team(models.Model):
     name = models.CharField(max_length=200, unique=True)
-
+    group = models.CharField(max_length=200)
+    
     def __unicode__(self):
         return self.name
 
@@ -21,7 +22,8 @@ class Match(models.Model):
     winner = models.ForeignKey(Team, related_name='winner', blank=True)
     score = models.CharField(max_length=200, blank=True, validators=[RegexValidator('^((\d)|([1-9]\d*))-((\d)|([1-9]\d*))$', message='please fix score format (e.g. 0-0)', code='invalid score')])
     finish = models.BooleanField()
-    
+    stage = models.CharField(max_length=200)
+        
     def __unicode__(self):
         return "%s vs %s" % (self.teamA, self.teamB)
 
