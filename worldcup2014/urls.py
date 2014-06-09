@@ -21,6 +21,9 @@ urlpatterns = patterns('',
 
     url(r'^match/vote/update/(?P<vote_id>\d+)/$', views.vote_update, name='vote_update'),    
     url(r'^match/vote/add/(?P<match_id>\d+)/$', views.vote_add, name='vote_add'),
+
+    url(r'^match/update/(?P<match_id>\d+)/$', views.match_update, name='match_update'),    
+    #url(r'^match/add/$', views.match_add, name='match_add'),
    
     url(r'^results/$', views.results, name='results'),    
     

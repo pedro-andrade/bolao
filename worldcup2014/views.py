@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 
 from worldcup2014.models import Match, MatchStriker, Vote
-from worldcup2014.forms import VoteForm
+from worldcup2014.forms import VoteForm, MatchForm
 
 # def index(request):
 #     return HttpResponse("Hello, world. You're at the poll index.")
@@ -52,9 +52,10 @@ def results(request):
         if numVote==0:
             tmp = {'striker': counter1, 'winner': counter2, 'score': counter3, 'total': counter1+counter2+counter3 }
         else:
-            vote = Vote.objects.all().filter(user=u)
+            vote = Vote.objects.all().filter(user=u, match__finish=True)
             tmp = {} 
             for v in vote:
+                #if _valid_vote(v.id):
                 counter1 += _get_striker_points(v.id)
                 counter2 += _get_winner_points(v.id)
                 counter3 += _get_score_points(v.id)
@@ -63,8 +64,17 @@ def results(request):
     print points
     return render(request, 'results.html', {'points': points})
 
+def _valid_vote(vote_id):
+    vote = Vote.objects.get(pk=vote_id)
+    match = vote.match
+    if match.finish == True:
+        return True
+    else:
+        return False
+        
 def _get_striker_points(vote_id):
     vote = Vote.objects.get(pk=vote_id)
+    
     striker = MatchStriker.objects.filter(match=vote.match)
     for s in striker:
         if s.striker == vote.striker:
@@ -140,3 +150,36 @@ def vote_add(request, match_id):
             return redirect('match_detail', vote.match.id)
 
     return render(request, "match_vote.html", {"vote_form": vote_form})
+
+@login_required
+def match_update(request, match_id):
+    
+    try:
+        match = Match.objects.get(pk=match_id)
+    except Exception:
+        messages.error(request, 'You can not update match that doesn\'t exist')
+        return redirect('match_index')
+    
+    match_form = MatchForm(request.POST or None, instance=match)
+
+    if request.method == 'POST':
+        if match_form.is_valid():
+            match_form.save()
+            messages.success(request, 'Successfully updated match %s' % (match_form.instance))
+            return redirect('match_detail', match.id)
+
+    return render(request, "match_update.html", {"match_form": match_form})
+
+@login_required
+def match_add(request):
+        
+    match = Match()
+
+    match_form = VoteForm(request.POST or None, instance=match)
+    if request.method == 'POST':
+        if match_form.is_valid():
+            match_form.save()
+            messages.success(request, 'Successfully added match %s' % (match_form.instance))            
+            return redirect('match_detail', match.id)
+
+    return render(request, "match_update.html", {"match_form": match_form})

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <form action="" class="form-horizontal" method="post">
+        {% csrf_token %}
+
+		<h3>
+			{{ match_form.instance.matchtime|date:"l, d F Y" }}<br>
+			<img src="/static/img/flags/{{ match_form.instance.teamA }}.png"> {{ match_form.instance.teamA | capfirst}} {{ match_form.instance.matchtime|date:"H:i" }} 
+			{{ match_form.instance.teamB | capfirst}} <img src="/static/img/flags/{{ match_form.instance.teamB }}.png">
+		</h3>
+
+        <legend>Add/Edit Match</legend>
+
+        {{ match_form }}
+        <br><br>
+        <p>
+            <input type="submit" class="btn btn-primary">
+        </p>
+    </form>
+
+{% endblock %}

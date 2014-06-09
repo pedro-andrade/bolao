@@ -1,6 +1,6 @@
 from django import forms
 
-from worldcup2014.models import Vote, Player, Team
+from worldcup2014.models import Vote, Player, Team, Match
 
 class NoEmptyChoiceField(forms.ModelChoiceField): 
 
@@ -32,4 +32,17 @@ class VoteForm(forms.ModelForm):
         self.fields['score'].label = u'Score'
         self.fields['score'].required = True
         self.fields['score'].widget = forms.TextInput()
-                        
+
+class MatchForm(forms.ModelForm):
+    class Meta:
+        model = Match
+#        fields = ('teamA', 'teamB', 'matchtime', 'winner', 'score', 'finish')
+        fields = ('matchtime', 'winner', 'score', 'finish')
+        
+    def __init__(self, *args, **kwargs):
+        super(MatchForm, self).__init__(*args, **kwargs)
+
+        instance = getattr(self, 'instance', None)
+        
+        _team = Team.objects.get(name='-')
+        self.fields['winner'].queryset = Team.objects.filter(name=instance.teamA.name) | Team.objects.filter(name=instance.teamB.name) | Team.objects.filter(name='-').order_by('name')
