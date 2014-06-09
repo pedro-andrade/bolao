@@ -33,11 +33,45 @@ def match_history(request):
 @login_required
 def match_detail(request, match_id):
     match = Match.objects.get(pk=match_id)
-    vote = Vote.objects.all().filter(match=match_id)
+    votes = Vote.objects.all().filter(match=match_id)
     strikers = MatchStriker.objects.all().filter(match=match_id)
-    uservote = Vote.objects.all().filter(match=match_id, user=request.user)
-    print strikers
-    return render(request, 'match_detail.html', {'vote': vote, 'match':match, 'strikers':strikers, 'uservote':uservote})
+    uservote = Vote.objects.all().filter(match=match_id, user=request.user)      
+
+#in case we want to show only the votes that exist
+#    points = {}
+#    for v in votes:
+#        if not match.finish:
+#            counter1 = 0
+#            counter2 = 0
+#            counter3 = 0
+#        else:
+#            counter1 = _get_striker_points(v)
+#            counter2 = _get_winner_points(v)
+#            counter3 = _get_score_points(v)
+#            tmp = {'vote':v, 'points_striker': counter1, 'points_winner': counter2, 'points_score': counter3, 'points_total': counter1+counter2+counter3 }
+#        points[v.user]=tmp
+            
+    points = {}
+    user = User.objects.all()
+    for u in user:
+        numVote = Vote.objects.filter(user=u, match=match_id).count()
+        if numVote==0 and match.finish:
+            tmp = {'vote':None, 'points_striker': 0, 'points_winner': 0, 'points_score': 0, 'points_total': 0 }
+            points[u]=tmp
+        elif numVote!=0:
+            vote = Vote.objects.get(user=u, match=match_id)
+            if not match.finish:
+                counter1 = 0
+                counter2 = 0
+                counter3 = 0
+            else:
+                counter1 = _get_striker_points(vote)
+                counter2 = _get_winner_points(vote)
+                counter3 = _get_score_points(vote)
+            tmp = {'vote':vote, 'points_striker': counter1, 'points_winner': counter2, 'points_score': counter3, 'points_total': counter1+counter2+counter3 }
+            points[u]=tmp
+        
+    return render(request, 'match_detail.html', {'vote': votes, 'match':match, 'strikers':strikers, 'uservote':uservote, 'points': points})
 
 @login_required    
 def results(request):

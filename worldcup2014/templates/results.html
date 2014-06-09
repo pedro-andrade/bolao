@@ -28,7 +28,7 @@
 {% endif %}
 
 {% if match_list %}
-	<h3>Matchs</h3>
+	<h3>Matches</h3>
 	
 	{% regroup match_list|dictsort:"matchtime" by matchtime|date:"l, d F Y" as matchByDay %}
 	{% for matchDay in matchByDay %}
