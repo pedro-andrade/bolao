@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.contrib import messages
 
-from worldcup2014.models import Match, MatchStriker, Vote
+from worldcup2014.models import Match, MatchStriker, Vote, ExtraVote
 from worldcup2014.forms import VoteForm, MatchForm
 
 # def index(request):
@@ -18,14 +18,12 @@ def index(request):
 
 @login_required          
 def match_index(request):
-    print datetime.now()
     match_list = Match.objects.filter(matchtime__gte=datetime.now()).order_by('matchtime')
     context = {'match_list': match_list}
     return render(request, 'match_index.html', context)    
 
 @login_required          
 def match_history(request):
-    print datetime.now()
     match_list = Match.objects.filter(matchtime__lt=datetime.now()).order_by('matchtime')
     context = {'match_list': match_list}
     return render(request, 'match_index.html', context)    
@@ -224,4 +222,6 @@ def rules(request):
 
 @login_required          
 def extra_vote(request):
-    return render(request, 'extra_vote.html')    
+    extra_vote_list = ExtraVote.objects.all().filter().order_by('user')
+    uservote = ExtraVote.objects.all().filter(user=request.user)
+    return render(request, 'extra_vote.html', {'extra_vote_list': extra_vote_list, 'uservote':uservote})    

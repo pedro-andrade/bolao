@@ -4,6 +4,41 @@
 {% block content %}
 <h1>Extra Votes</h1>
 
-blablabl
+<table id="metric-table" class="table table-striped table-bordered" border=0>
+	<tr>
+		<th></th>
+		<th>User</th>
+		<th>Striker</th>
+		<th>Winner</th>
+	</tr>
+		
+	{% if extra_vote_list %}	
+		{% for extra_vote in extra_vote_list %}
+			<tr>
+				<td width="20%">
+					{% if user.username == p.username %}
+						edit
+						{#<a href="{% url 'vote_update' v.vote.id %}">edit</a>#}
+					{% else %}	
+						-
+					{% endif %}	
+				</td>
+				<td width="20%">{{ extra_vote.user | capfirst}}</td>
+				<td width="20%">{{ extra_vote.winner | capfirst}}</td>
+				<td width="40%">{{ extra_vote.striker }}</td>
+			</tr>	
+		{% endfor %}
+	{% endif %}
+	
+	{% if not uservote %}
+		<tr>
+			<td colspan="4">
+				Vote Now !!!
+				{#<a href="{% url 'vote_add' match.id %}">Vote Now !!!</a>#}
+			</td>
+		</tr>
+    {% endif %}
+    
+</table>
 
 {% endblock %}
