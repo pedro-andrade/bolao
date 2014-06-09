@@ -16,7 +16,7 @@
 	    </tr>
 	    {% for p, v in points.items %}
 	    <tr>
-	        <td>{{ p }}</td>
+	        <td>{{ p | capfirst }}</td>
 	        <td>{{ v.striker }}</td>
 	        <td>{{ v.winner }}</td>
 	        <td>{{ v.score }}</td>
