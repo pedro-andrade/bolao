@@ -186,6 +186,10 @@ def vote_add(request, match_id):
 @login_required
 def match_update(request, match_id):
     
+    if request.user.username != 'pedro' or request.user.username != 'teresa':
+        messages.error(request, 'You can not update the match details')
+        return redirect('match_index')
+    
     try:
         match = Match.objects.get(pk=match_id)
     except Exception:
