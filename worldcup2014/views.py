@@ -224,6 +224,10 @@ def extra_vote_update(request, extra_vote_id):
         messages.error(request, 'You can not update extra vote that doesn\'t exist')
         return redirect('extra_vote')
 
+    if request.user.username != extra_vote.user :
+        messages.error(request, 'You can not update vote of another user')
+        return redirect('extra_vote')
+
     extra_vote_form = ExtraVoteForm(request.POST or None, instance=extra_vote)
 
     if request.method == 'POST':
