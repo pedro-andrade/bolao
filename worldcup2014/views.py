@@ -52,16 +52,16 @@ def results(request):
         if numVote==0:
             tmp = {'striker': counter1, 'winner': counter2, 'score': counter3, 'total': counter1+counter2+counter3 }
         else:
-            vote = Vote.objects.all().filter(user=u, match__finish=True)
+            vote_list = Vote.objects.all().filter(user=u, match__finish=True)
             tmp = {} 
-            for v in vote:
-                #if _valid_vote(v.id):
-                counter1 += _get_striker_points(v.id)
-                counter2 += _get_winner_points(v.id)
-                counter3 += _get_score_points(v.id)
+            for v in vote_list:
+                vote = Vote.objects.get(pk=v.id)
+                counter1 += _get_striker_points(vote)
+                counter2 += _get_winner_points(vote)
+                counter3 += _get_score_points(vote)
                 tmp = {'striker': counter1, 'winner': counter2, 'score': counter3, 'total': counter1+counter2+counter3 }
         points[u]=tmp
-    print points
+    #print points
     return render(request, 'results.html', {'points': points})
 
 def _valid_vote(vote_id):
@@ -72,25 +72,21 @@ def _valid_vote(vote_id):
     else:
         return False
         
-def _get_striker_points(vote_id):
-    vote = Vote.objects.get(pk=vote_id)
-    
+def _get_striker_points(vote):
     striker = MatchStriker.objects.filter(match=vote.match)
     for s in striker:
         if s.striker == vote.striker:
             return 2
     return 0
 
-def _get_winner_points(vote_id):
-    vote = Vote.objects.get(pk=vote_id)
+def _get_winner_points(vote):
     match = vote.match
     if match.winner == vote.winner:
         return 1
     else:
         return 0
 
-def _get_score_points(vote_id):
-    vote = Vote.objects.get(pk=vote_id)
+def _get_score_points(vote):
     match = vote.match
     if match.score == vote.score:
         return 2
