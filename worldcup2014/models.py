@@ -7,14 +7,14 @@ class Team(models.Model):
     
     def __unicode__(self):
         return self.name
-
+    
 class Player(models.Model):
     name = models.CharField(max_length=200)
     team = models.ForeignKey(Team)
-
+    
     def __unicode__(self):
         return "%s (%s)" % (self.name, self.team)
-
+    
 class Match(models.Model):
     teamA = models.ForeignKey(Team, related_name='teamA', blank=False)
     teamB = models.ForeignKey(Team, related_name='teamB', blank=False)
@@ -27,14 +27,14 @@ class Match(models.Model):
     
     def __unicode__(self):
         return "%s vs %s" % (self.teamA, self.teamB)
-
+    
 class MatchStriker(models.Model):
     match = models.ForeignKey(Match, blank=False)
     striker = models.ForeignKey(Player, blank=False)
-
+    
     def __unicode__(self):
         return "%s - %s" % (self.match, self.striker)
-
+    
 class Vote(models.Model):
     match = models.ForeignKey(Match, blank=False)
     user = models.CharField(max_length=200, blank=False)
@@ -52,3 +52,11 @@ class ExtraVote(models.Model):
     
     def __unicode__(self):
         return "%s - %s - %s" % (self.user, self.striker, self.winner)
+    
+class Comment(models.Model):
+    user = models.CharField(max_length=200, blank=False)
+    comment = models.CharField(max_length=2000, blank=False)
+    
+    def __unicode__(self):
+        return "%s - %s" % (self.user, self.comment)
+        
