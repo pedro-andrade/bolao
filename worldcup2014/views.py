@@ -18,13 +18,13 @@ def index(request):
 
 @login_required          
 def match_index(request):
-    match_list = Match.objects.filter(matchtime__gte=datetime.now()).order_by('matchtime')
+    match_list = Match.objects.filter(matchtime__gte=datetime.utcnow()).order_by('matchtime')
     context = {'match_list': match_list}
     return render(request, 'match_index.html', context)    
 
 @login_required          
 def match_history(request):
-    match_list = Match.objects.filter(matchtime__lt=datetime.now()).order_by('matchtime')
+    match_list = Match.objects.filter(matchtime__lt=datetime.utcnow()).order_by('matchtime')
     context = {'match_list': match_list}
     return render(request, 'match_index.html', context)    
 
@@ -95,7 +95,7 @@ def results(request):
         points[u]=tmp
     #print points
     
-    match_list = Match.objects.filter(matchtime__lt=datetime.now()).order_by('matchtime')
+    match_list = Match.objects.filter(matchtime__lt=datetime.utcnow()).order_by('matchtime')
 
     return render(request, 'results.html', {'points': points, 'match_list': match_list})
 
