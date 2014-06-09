@@ -21,9 +21,11 @@
 					</li>					
 					<li>
 						<a href="{% url 'rules' %}">Rules</a>
-					</li>					
+					</li>
+				</ul>
+				<ul class="nav pull-right">
 					<li>
-						<a href="{% url 'logout' %}">Logout</a>							
+						<a href="{% url 'logout' %}">{{ user.username | capfirst }} <img src="/static/img/logout.png" height="20" width="20"></a>							
 					</li>
 					{% endif %}			
                 </ul>
