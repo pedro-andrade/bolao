@@ -48,7 +48,7 @@
 				</td>
 			{% endif %}	
 			
-			<td width="20%">{{ p }}</td>
+			<td width="20%">{{ p | capfirst }}</td>
 			
 			<td width="20%">
 				{% if v.vote %}
@@ -64,7 +64,7 @@
 			
 			<td width="20%">
 				{% if v.vote %}
-					{{ v.vote.winner }}
+					{{ v.vote.winner | capfirst }}
 				{% else %}
 					&nbsp;
 				{% endif %}		
