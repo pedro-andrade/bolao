@@ -15,6 +15,10 @@ body {
 	font-weight: bold;
 }
 
+.toCenter { 
+	text-align: center; 
+}
+
 .table-bordered td.toRight { 
 	text-align: right; 
 }
