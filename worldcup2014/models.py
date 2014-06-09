@@ -13,7 +13,7 @@ class Player(models.Model):
     team = models.ForeignKey(Team)
     
     def __unicode__(self):
-        return "%s - %s" % (self.team, self.name)
+        return "[%s] %s" % (self.team, self.name)
     
 class Match(models.Model):
     teamA = models.ForeignKey(Team, related_name='teamA', blank=False)
