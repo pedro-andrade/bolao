@@ -81,7 +81,8 @@ def results(request):
         counter2 = 0
         counter3 = 0
         numVote = Vote.objects.filter(user=u).count()
-        if numVote==0:
+        numVote2 = Vote.objects.filter(user=u, match__finish=True).count()
+        if numVote==0 or numVote2==0:
             tmp = {'striker': counter1, 'winner': counter2, 'score': counter3, 'total': counter1+counter2+counter3 }
         else:
             vote_list = Vote.objects.all().filter(user=u, match__finish=True)
