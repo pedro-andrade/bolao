@@ -4,9 +4,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'bolao.views.home', name='home'),
-    # url(r'^blog/', include('blog.urls')),
+    url(r'^$', include('worldcup2014.urls')),
     url(r'^bolao/', include('worldcup2014.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^comments/', include('django.contrib.comments.urls')),    
