@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <form action="" class="form-horizontal" method="post">
+        {% csrf_token %}
+
+		<legend>Add/Edit extra vote</legend>
+
+        {{ extra_vote_form }}
+        
+        <br><br>
+        <p>
+            <input type="submit" class="btn btn-primary">
+        </p>
+    </form>
+
+{% endblock %}

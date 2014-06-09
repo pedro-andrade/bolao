@@ -1,6 +1,6 @@
 from django import forms
 
-from worldcup2014.models import Vote, Player, Team, Match
+from worldcup2014.models import Vote, Player, Team, Match, ExtraVote
 
 class NoEmptyChoiceField(forms.ModelChoiceField): 
 
@@ -46,3 +46,17 @@ class MatchForm(forms.ModelForm):
         
         _team = Team.objects.get(name='-')
         self.fields['winner'].queryset = Team.objects.filter(name=instance.teamA.name) | Team.objects.filter(name=instance.teamB.name) | Team.objects.filter(name='-').order_by('name')
+
+class ExtraVoteForm(forms.ModelForm):
+    class Meta:
+        model = ExtraVote
+        fields = ('striker', 'winner')
+        #exclude = ('user')
+        
+    def __init__(self, *args, **kwargs):
+        super(ExtraVoteForm, self).__init__(*args, **kwargs)
+
+        self.fields['striker'].queryset = Player.objects.all().order_by('team')
+        self.fields['winner'].queryset = Team.objects.all().order_by('name')
+        
+       

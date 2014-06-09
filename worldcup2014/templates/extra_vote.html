@@ -8,17 +8,16 @@
 	<tr>
 		<th></th>
 		<th>User</th>
-		<th>Striker</th>
 		<th>Winner</th>
+		<th>Striker</th>
 	</tr>
 		
 	{% if extra_vote_list %}	
 		{% for extra_vote in extra_vote_list %}
 			<tr>
 				<td width="20%">
-					{% if user.username == p.username %}
-						edit
-						{#<a href="{% url 'vote_update' v.vote.id %}">edit</a>#}
+					{% if user.username == extra_vote.user %}
+						<a href="{% url 'extra_vote_update' extra_vote.id %}">edit</a>
 					{% else %}	
 						-
 					{% endif %}	

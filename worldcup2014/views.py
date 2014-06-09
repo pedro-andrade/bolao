@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 
 from worldcup2014.models import Match, MatchStriker, Vote, ExtraVote
-from worldcup2014.forms import VoteForm, MatchForm
+from worldcup2014.forms import VoteForm, MatchForm, ExtraVoteForm
 
 # def index(request):
 #     return HttpResponse("Hello, world. You're at the poll index.")
@@ -215,6 +215,24 @@ def match_add(request):
 
     return render(request, "match_update.html", {"match_form": match_form})
 
+@login_required
+def extra_vote_update(request, extra_vote_id):
+        
+    try:
+        extra_vote = ExtraVote.objects.get(pk=extra_vote_id)
+    except Exception:
+        messages.error(request, 'You can not update extra vote that doesn\'t exist')
+        return redirect('extra_vote')
+
+    extra_vote_form = ExtraVoteForm(request.POST or None, instance=extra_vote)
+
+    if request.method == 'POST':
+        if extra_vote_form.is_valid():
+            extra_vote_form.save()
+            messages.success(request, 'Successfully updated extra vote %s' % (extra_vote_form.instance))
+            return redirect('extra_vote')
+
+    return render(request, "extra_vote_update.html", {"extra_vote_form": extra_vote_form})
 
 @login_required          
 def rules(request):

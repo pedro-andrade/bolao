@@ -30,6 +30,9 @@ urlpatterns = patterns('',
     url(r'^rules/$', views.rules, name='rules'),    
     
     url(r'^extra/$', views.extra_vote, name='extra_vote'),    
+    
+    url(r'^extra/update/(?P<extra_vote_id>\d+)/$', views.extra_vote_update, name='extra_vote_update'),    
+    #url(r'^extra/add//$', views.extra_vote_add, name='extra_vote_add'),
 
 
 )
