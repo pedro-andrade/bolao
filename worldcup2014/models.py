@@ -23,7 +23,8 @@ class Match(models.Model):
     score = models.CharField(max_length=200, blank=True, validators=[RegexValidator('^((\d)|([1-9]\d*))-((\d)|([1-9]\d*))$', message='please fix score format (e.g. 0-0)', code='invalid score')])
     finish = models.BooleanField()
     stage = models.CharField(max_length=200)
-        
+    #   strikers = models.ManyToManyField(Player, null=True, blank=True)
+    
     def __unicode__(self):
         return "%s vs %s" % (self.teamA, self.teamB)
 
@@ -43,3 +44,11 @@ class Vote(models.Model):
     
     def __unicode__(self):
         return "%s - %s" % (self.match, self.user)
+    
+class ExtraVote(models.Model):
+    user = models.CharField(max_length=200, blank=False)
+    striker = models.ForeignKey(Player, related_name='strikerExtraVote', blank=False)
+    winner = models.ForeignKey(Team, related_name='winnerExtraVote', blank=False)
+    
+    def __unicode__(self):
+        return "%s - %s" % (self.user, self.striker, self.winner)
