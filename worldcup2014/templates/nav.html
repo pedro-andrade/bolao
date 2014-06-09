@@ -11,11 +11,8 @@
                 <ul class="nav">
 			        {% if user.is_authenticated %}
 					<li>
-						<a href="{% url 'match_index' %}">Next Matches</a>
+						<a href="{% url 'match_index' %}">Matches</a>
 					</li>
-					<li>
-						<a href="{% url 'match_history' %}">Old Matches</a>
-					</li>					
 					<li>
 						<a href="{% url 'results' %}">Results</a>
 					</li>					

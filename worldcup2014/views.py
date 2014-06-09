@@ -62,7 +62,10 @@ def results(request):
                 tmp = {'striker': counter1, 'winner': counter2, 'score': counter3, 'total': counter1+counter2+counter3 }
         points[u]=tmp
     #print points
-    return render(request, 'results.html', {'points': points})
+    
+    match_list = Match.objects.filter(matchtime__lt=datetime.now()).order_by('matchtime')
+
+    return render(request, 'results.html', {'points': points, 'match_list': match_list})
 
 def _valid_vote(vote_id):
     vote = Vote.objects.get(pk=vote_id)

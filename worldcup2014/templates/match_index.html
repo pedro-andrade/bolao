@@ -2,8 +2,9 @@
 
 {% block content %}
 
-{% if match_list %}
+<h1>Matchs</h1>
 
+{% if match_list %}
 	{% regroup match_list|dictsort:"matchtime" by matchtime|date:"l, d F Y" as matchByDay %}
 	{% for matchDay in matchByDay %}
         <legend>{{ matchDay.grouper }}</legend>
