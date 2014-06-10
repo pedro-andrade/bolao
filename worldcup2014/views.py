@@ -31,7 +31,7 @@ def match_index(request):
             tmp = {'vote':vote, 'numVotes':numVotes}
         match_vote_list[m.id]=tmp
 
-    context = {'match_list': match_list, 'match_vote_list': match_vote_list}
+    context = {'match_list': match_list, 'match_vote_list': match_vote_list, 'path':request.path}
     return render(request, 'match_index.html', context)    
 
 @login_required          
