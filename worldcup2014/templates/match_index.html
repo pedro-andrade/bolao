@@ -16,13 +16,12 @@
 					<a href="{% url 'match_detail' match.id %}">View</a>
 					{% for key, value in match_vote_list.items %}
     					{% if match.id == key %}
-    						
+    						[{{value.numVotes}}]
     						{% if value.vote %}
         						{# <a href="{% url 'vote_update' value.vote.id %}">Edit vote</a> #}
         					{% else %}
         						| <a href="{% url 'vote_add' match.id %}">Vote now</a>
         					{% endif %}
-        					[{{value.numVotes}}]
     					{% endif %}
 					{% endfor %}
 				</td>
