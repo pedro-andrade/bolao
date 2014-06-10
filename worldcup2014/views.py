@@ -19,7 +19,19 @@ def index(request):
 @login_required          
 def match_index(request):
     match_list = Match.objects.filter(matchtime__gte=datetime.utcnow()).order_by('matchtime')
-    context = {'match_list': match_list}
+    
+    match_vote_list = {}
+    for m in match_list:
+        numVote = Vote.objects.filter(user=request.user, match=m.id).count()
+        numVotes = Vote.objects.filter(match=m.id).count()
+        if numVote==0:
+            tmp = {'vote':None, 'numVotes':numVotes}
+        elif numVote!=0:
+            vote = Vote.objects.get(user=request.user, match=m.id)
+            tmp = {'vote':vote, 'numVotes':numVotes}
+        match_vote_list[m.id]=tmp
+
+    context = {'match_list': match_list, 'match_vote_list': match_vote_list}
     return render(request, 'match_index.html', context)    
 
 @login_required          

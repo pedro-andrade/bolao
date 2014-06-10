@@ -12,7 +12,20 @@
 		<table id="metric-table" class="table table-striped table-bordered">
         {% for match in matchDay.list %}
         	<tr>
-				<td width="20%"><a href="{% url 'match_detail' match.id %}">View</a></td>
+				<td width="20%">
+					<a href="{% url 'match_detail' match.id %}">View</a>
+					{% for key, value in match_vote_list.items %}
+    					{% if match.id == key %}
+    						
+    						{% if value.vote %}
+        						{# <a href="{% url 'vote_update' value.vote.id %}">Edit vote</a> #}
+        					{% else %}
+        						| <a href="{% url 'vote_add' match.id %}">Vote now</a>
+        					{% endif %}
+        					[{{value.numVotes}}]
+    					{% endif %}
+					{% endfor %}
+				</td>
 				<td width="20%"><img src="/static/img/flags/{{ match.teamA }}.png"> {{ match.teamA | capfirst}} </td>
 				<td width="20%" class="toCenter">{{ match.matchtime|date:"H:i" }}</td>
 				<td width="20%" class="toRight">{{ match.teamB | capfirst}} <img src="/static/img/flags/{{ match.teamB }}.png"> </td>
