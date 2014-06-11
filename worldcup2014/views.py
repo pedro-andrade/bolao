@@ -7,18 +7,20 @@ from django.contrib import messages
 from worldcup2014.models import Match, MatchStriker, Vote, ExtraVote
 from worldcup2014.forms import VoteForm, MatchForm, ExtraVoteForm
 
-# def index(request):
-#     return HttpResponse("Hello, world. You're at the poll index.")
 
-from datetime import datetime
+from datetime import datetime, timedelta
 
 # index view (just redirect to login page)
 def index(request):
     return HttpResponseRedirect('/bolao/login')
 
+def _get_local_match_time():
+    return datetime.now() - timedelta(hours=5)
+
 @login_required          
 def match_index(request):
-    match_list = Match.objects.filter(matchtime__gte=datetime.utcnow()).order_by('matchtime')
+
+    match_list = Match.objects.filter(matchtime__gte=_get_local_match_time()).order_by('matchtime')
     
     match_vote_list = {}
     for m in match_list:
@@ -31,12 +33,12 @@ def match_index(request):
             tmp = {'vote':vote, 'numVotes':numVotes}
         match_vote_list[m.id]=tmp
 
-    context = {'match_list': match_list, 'match_vote_list': match_vote_list, 'path':request.path}
+    context = {'match_list': match_list, 'match_vote_list': match_vote_list, 'path':request.path, 'time':_get_local_match_time()}
     return render(request, 'match_index.html', context)    
 
 @login_required          
 def match_history(request):
-    match_list = Match.objects.filter(matchtime__lt=datetime.utcnow()).order_by('matchtime')
+    match_list = Match.objects.filter(matchtime__lt=_get_local_match_time()).order_by('matchtime')
     context = {'match_list': match_list}
     return render(request, 'match_index.html', context)    
 
@@ -108,7 +110,7 @@ def results(request):
         points[u]=tmp
     #print points
     
-    match_list = Match.objects.filter(matchtime__lt=datetime.utcnow()).order_by('matchtime')
+    match_list = Match.objects.filter(matchtime__lt=_get_local_match_time()).order_by('matchtime')
 
     return render(request, 'results.html', {'points': points, 'match_list': match_list})
 
