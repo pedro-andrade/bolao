@@ -17,6 +17,9 @@ def index(request):
 def _get_local_match_time():
     return datetime.now() - timedelta(hours=5)
 
+def _editable(matchtime):
+    return _get_local_match_time() < matchtime
+
 @login_required          
 def match_index(request):
 
@@ -157,6 +160,10 @@ def vote_update(request, vote_id):
         messages.error(request, 'You can not update vote of another user')
         return redirect('match_detail', vote.match.id)
 
+    if not _editable(vote.match.matchtime) :
+        messages.error(request, 'You can not update vote of past match')
+        return redirect('match_detail', vote.match.id)
+   
     vote_form = VoteForm(request.POST or None, instance=vote, user=request.user)
 
     if request.method == 'POST':
@@ -175,6 +182,10 @@ def vote_add(request, match_id):
     except Exception:
         messages.error(request, 'You can not add vote to a match that doesn\'t exist')
         return redirect('match_index')
+
+    if not _editable(match.matchtime) :
+        messages.error(request, 'You can not vote anymore in the match')
+        return redirect('match_detail', match.id)
     
     try:
         isVote = Vote.objects.get(user=request.user, match=match.id)
