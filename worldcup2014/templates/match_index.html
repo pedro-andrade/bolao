@@ -26,7 +26,13 @@
 					{% endfor %}
 				</td>
 				<td width="20%"><img src="/static/img/flags/{{ match.teamA }}.png"> {{ match.teamA | capfirst}} </td>
-				<td width="20%" class="toCenter">{{ match.matchtime|date:"H:i" }}</td>
+				<td width="20%" class="toCenter">
+					{% if match.finish %}
+						{{ match.score }}
+					{% else %}
+						{{ match.matchtime|date:"H:i" }}
+					{% endif %}
+				</td>
 				<td width="20%" class="toRight">{{ match.teamB | capfirst}} <img src="/static/img/flags/{{ match.teamB }}.png"> </td>
 			</tr>
         {% endfor %}

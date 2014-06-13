@@ -11,6 +11,9 @@
                 <ul class="nav">
 			        {% if user.is_authenticated %}
 					<li>
+						<a href="{% url 'extra_vote' %}">Extra</a>
+					</li>					
+					<li>
 						<a href="{% url 'match_index' %}">Next Matches</a>
 					</li>
 					<li>
@@ -19,9 +22,6 @@
 					<li>
 						<a href="{% url 'results' %}">Results</a>
 					</li>
-					<li>
-						<a href="{% url 'extra_vote' %}">Extra</a>
-					</li>					
 					<li>
 						<a href="{% url 'rules' %}">Rules</a>
 					</li>

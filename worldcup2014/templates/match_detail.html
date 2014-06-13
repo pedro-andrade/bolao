@@ -8,13 +8,17 @@
 
 <h3>
 <legend>{{ match.matchtime|date:"l, d F Y" }} &nbsp;&nbsp; <br>
-<img src="/static/img/flags/{{ match.teamA }}.png"> {{ match.teamA | capfirst}} {{ match.matchtime|date:"H:i" }} {{ match.teamB | capfirst}} <img src="/static/img/flags/{{ match.teamB }}.png">
+<img src="/static/img/flags/{{ match.teamA }}.png"> {{ match.teamA | capfirst}} 
+{% if match.finish %}
+	{{ match.score }}
+{% else %}
+	{{ match.matchtime|date:"H:i" }}
+{% endif %}	
+{{ match.teamB | capfirst}} <img src="/static/img/flags/{{ match.teamB }}.png">
 </legend>
 </h3>
 
 {% if match.finish %}
-<p><span class="label">Winner</span> {{ match.winner | capfirst }}</p>
-<p><span class="label">Score</span> {{ match.score }}</p>
 <p><span class="label">Strikers</span> {% for stk in strikers %}{{ stk.striker }} {% endfor %}</p>
 {# <p><span class="label">Finish</span> {{ match.finish }}</p> #}
 {% endif %}	
