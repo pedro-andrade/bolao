@@ -21,6 +21,10 @@ def _editable(matchtime):
     return _get_local_match_time() < matchtime
 
 @login_required          
+def player(request):
+    return render(request, 'player.html')    
+
+@login_required          
 def match_index(request):
 
     match_list = Match.objects.filter(matchtime__gte=_get_local_match_time()).order_by('matchtime')

@@ -37,5 +37,6 @@ urlpatterns = patterns('',
     url(r'^comment/$', views.comment_index, name='comment_index'),
     url(r'^comment/update/(?P<comment_id>\d+)/$', views.comment_update, name='comment_update'),
     url(r'^comment/add/$', views.comment_add, name='comment_add'),
+    url(r'^player/$', views.player, name='player'),
 
 )
