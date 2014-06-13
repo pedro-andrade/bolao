@@ -1,6 +1,6 @@
 from django import forms
 
-from worldcup2014.models import Vote, Player, Team, Match, ExtraVote
+from worldcup2014.models import Vote, Player, Team, Match, ExtraVote, Comment
 
 class NoEmptyChoiceField(forms.ModelChoiceField): 
 
@@ -58,4 +58,14 @@ class ExtraVoteForm(forms.ModelForm):
         self.fields['striker'].queryset = Player.objects.all().order_by('team','name')
         self.fields['winner'].queryset = Team.objects.all().order_by('name')
         
-       
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ('comment',)
+        
+    def __init__(self, *args, **kwargs):
+        super(CommentForm, self).__init__(*args, **kwargs)
+        
+        self.fields['comment'].widget = forms.Textarea()
+        self.fields['comment'].widget.attrs["cols"] = 200
+        self.fields['comment'].widget.attrs["rows"] = 10

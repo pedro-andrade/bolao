@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 
 from worldcup2014.models import Match, MatchStriker, Vote, ExtraVote, Comment
-from worldcup2014.forms import VoteForm, MatchForm, ExtraVoteForm
+from worldcup2014.forms import VoteForm, MatchForm, ExtraVoteForm, CommentForm
 
 
 from datetime import datetime, timedelta
@@ -301,5 +301,43 @@ def extra_vote(request):
 
 @login_required          
 def comment_index(request):
-    comment_list = Comment.objects.all()
+    comment_list = Comment.objects.all().filter().order_by('-id')
     return render(request, 'comment_index.html', {'comment_list': comment_list})
+
+@login_required
+def comment_update(request, comment_id):
+    
+    try:
+        comment = Comment.objects.get(pk=comment_id)
+    except Exception:
+        messages.error(request, 'You can not update comment that doesn\'t exist')
+        return redirect('comment_index')
+    
+    if request.user.username != comment.user :
+        messages.error(request, 'You can not update comment of another user')
+        return redirect('comment_index')
+
+    comment_form = CommentForm(request.POST or None, instance=comment)
+
+    if request.method == 'POST':
+        if comment_form.is_valid():
+            comment_form.save()
+            messages.success(request, 'Successfully updated comment')
+            return redirect('comment_index')
+
+    return render(request, "comment_update.html", {"comment_form": comment_form})
+
+@login_required
+def comment_add(request):
+    
+    comment = Comment()
+    comment.user = request.user
+
+    comment_form = CommentForm(request.POST or None, instance=comment)
+    if request.method == 'POST':
+        if comment_form.is_valid():
+            comment_form.save()
+            messages.success(request, 'Successfully added comment' )            
+            return redirect('comment_index')
+
+    return render(request, "comment_update.html", {"comment_form": comment_form})
