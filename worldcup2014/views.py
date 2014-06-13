@@ -36,13 +36,13 @@ def match_index(request):
             tmp = {'vote':vote, 'numVotes':numVotes}
         match_vote_list[m.id]=tmp
 
-    context = {'match_list': match_list, 'match_vote_list': match_vote_list, 'path':request.path, 'time':_get_local_match_time()}
+    context = {'subtitle':'Next', 'match_list': match_list, 'match_vote_list': match_vote_list, 'path':request.path, 'time':_get_local_match_time()}
     return render(request, 'match_index.html', context)    
 
 @login_required          
-def match_history(request):
+def match_past(request):
     match_list = Match.objects.filter(matchtime__lt=_get_local_match_time()).order_by('matchtime')
-    context = {'match_list': match_list}
+    context = {'subtitle':'Past', 'match_list': match_list}
     return render(request, 'match_index.html', context)    
 
 @login_required
@@ -111,11 +111,8 @@ def results(request):
                 counter3 += _get_score_points(vote)
                 tmp = {'striker': counter1, 'winner': counter2, 'score': counter3, 'total': counter1+counter2+counter3 }
         points[u]=tmp
-    #print points
-    
-    match_list = Match.objects.filter(matchtime__lt=_get_local_match_time()).order_by('matchtime')
 
-    return render(request, 'results.html', {'points': points, 'match_list': match_list})
+    return render(request, 'results.html', {'points': points})
 
 def _valid_vote(vote_id):
     vote = Vote.objects.get(pk=vote_id)
