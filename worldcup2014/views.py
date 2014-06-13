@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.contrib import messages
 
-from worldcup2014.models import Match, MatchStriker, Vote, ExtraVote
+from worldcup2014.models import Match, MatchStriker, Vote, ExtraVote, Comment
 from worldcup2014.forms import VoteForm, MatchForm, ExtraVoteForm
 
 
@@ -301,3 +301,8 @@ def extra_vote(request):
     extra_vote_list = ExtraVote.objects.all().filter().order_by('user')
     uservote = ExtraVote.objects.all().filter(user=request.user)
     return render(request, 'extra_vote.html', {'extra_vote_list': extra_vote_list, 'uservote':uservote})    
+
+@login_required          
+def comment_index(request):
+    comment_list = Comment.objects.all()
+    return render(request, 'comment_index.html', {'comment_list': comment_list})

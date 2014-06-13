@@ -34,5 +34,7 @@ urlpatterns = patterns('',
     url(r'^extra/update/(?P<extra_vote_id>\d+)/$', views.extra_vote_update, name='extra_vote_update'),    
     url(r'^extra/add/$', views.extra_vote_add, name='extra_vote_add'),
 
+    url(r'^comment/$', views.comment_index, name='comment_index'),
+    url(r'^comment/(?P<match_id>\d+)/$', views.match_detail, name='match_detail'),
 
 )
