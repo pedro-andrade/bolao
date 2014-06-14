@@ -6,20 +6,23 @@
 
 {# <h1>Match</h1> #}
 <h3>
-<legend>{{ match.matchtime|date:"l, d F Y" }} &nbsp;&nbsp; <br>
-<img src="/static/img/flags/{{ match.teamA }}.png"> {{ match.teamA | capfirst}} 
-{% if match.finish %}
-	{{ match.score }}
-{% else %}
-	{{ match.matchtime|date:"H:i" }}
-{% endif %}	
-{{ match.teamB | capfirst}} <img src="/static/img/flags/{{ match.teamB }}.png">
-</legend>
+	{{ match.matchtime|date:"l, d F Y" }} &nbsp;&nbsp; <br>
+	<img src="/static/img/flags/{{ match.teamA }}.png"> {{ match.teamA | capfirst}} 
+	{% if match.finish %}
+		{{ match.score }}
+	{% else %}
+		{{ match.matchtime|date:"H:i" }}
+	{% endif %}	
+	{{ match.teamB | capfirst}}
+	<img src="/static/img/flags/{{ match.teamB }}.png">
 </h3>
 
 {% if match.finish %}
-<p><span class="label">Strikers</span> {% for stk in strikers %}{{ stk.striker }} {% endfor %}</p>
+	{% for stk in strikers %}
+		{{ stk.striker }} <br>
+	{% endfor %}
 {% endif %}	
+<hr>
 
 <table id="metric-table" class="table table-striped table-bordered" border=0>
 	<tr>
