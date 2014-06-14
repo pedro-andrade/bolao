@@ -19,6 +19,14 @@ body {
 	text-align: center; 
 }
 
+.table-bordered th.toRight { 
+	text-align: right; 
+}
+
+.table-bordered th.toCenter { 
+	text-align: center; 
+}
+
 .table-bordered td.toRight { 
 	text-align: right; 
 }

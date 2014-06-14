@@ -27,22 +27,22 @@
 <table id="metric-table" class="table table-striped table-bordered" border=0>
 	<tr>
 		{% if not match.finish and isEditable %}
-			<th></th>
-			<th>User</th>
-			<th>Striker</th>
-			<th>Winner</th>
-			<th>Score</th>
+			<th ></th>
+			<th >User</th>
+			<th class="toRight">Score</th>
+			<th class="toRight">Striker</th>
+			<th class="toRight">Winner</th>
 		{% elif not match.finish and not isEditable %}
-			<th>User</th>
-			<th>Striker</th>
-			<th>Winner</th>
-			<th>Score</th>
+			<th >User</th>
+			<th class="toRight">Score</th>
+			<th class="toRight">Striker</th>
+			<th class="toRight">Winner</th>
 		{% else %}
-			<th>User</th>
-			<th colspan=2>Striker</th>
-			<th colspan=2>Winner</th>
-			<th colspan=2>Score</th>
-			<th>Total</th>
+			<th >User</th>
+			<th class="toRight">Total</th>
+			<th class="toRight" colspan=2>Score</th>
+			<th class="toRight" colspan=2>Striker</th>
+			<th class="toRight" colspan=2>Winner</th>
 		{% endif %}	
 		
 	</tr>
@@ -63,7 +63,23 @@
 					
 					<td width="20%">{{ p | capfirst }}</td>
 					
-					<td width="20%">
+					{% if match.finish %}
+						<td class="toRight">{{ v.points_total }}</td>
+					{% endif %}	
+					
+					<td width="20%" class="toRight">
+						{% if v.vote %}
+							{{ v.vote.score }}
+						{% else %}
+							&nbsp;
+						{% endif %}		
+					</td>
+					
+					{% if match.finish %}
+						<td class="toRight">{{ v.points_score }}</td>
+					{% endif %}	
+
+					<td width="20%" class="toRight">
 						{% if v.vote %}
 							{{ v.vote.striker }}
 						{% else %}
@@ -75,7 +91,7 @@
 						<td class="toRight">{{ v.points_striker }}</td>
 					{% endif %}	
 					
-					<td width="20%">
+					<td width="20%" class="toRight">
 						{% if v.vote %}
 							{{ v.vote.winner | capfirst }}
 						{% else %}
@@ -87,21 +103,6 @@
 						<td class="toRight">{{ v.points_winner }}</td>
 					{% endif %}	
 					
-					<td width="20%">
-						{% if v.vote %}
-							{{ v.vote.score }}
-						{% else %}
-							&nbsp;
-						{% endif %}		
-					</td>
-					
-					{% if match.finish %}
-						<td class="toRight">{{ v.points_score }}</td>
-					{% endif %}	
-					
-					{% if match.finish %}
-						<td class="toRight">{{ v.points_total }}</td>
-					{% endif %}	
 				</tr>
 			{% endif %}
 		{% endfor %}

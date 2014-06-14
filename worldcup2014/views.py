@@ -99,7 +99,7 @@ def match_detail(request, match_id):
                 counter3 = _get_score_points(vote)
             tmp = {'user':u, 'vote':vote, 'points_striker': counter1, 'points_winner': counter2, 'points_score': counter3, 'points_total': counter1+counter2+counter3 }
             points[u]=tmp
-    points_sorted = sorted(points, key=lambda x: (-points[x]['points_total'], points[x]['user']))
+    points_sorted = sorted(points, key=lambda x: (-points[x]['points_total'],-points[x]['points_score'],-points[x]['points_striker'],-points[x]['points_winner']))
     return render(request, 'match_detail.html', {'vote': votes, 'match':match, 'strikers':strikers, 'uservote':uservote, 'points': points, 'points_sorted':points_sorted, 'isEditable':isEditable})
 
 @login_required    
@@ -125,7 +125,7 @@ def results(request):
                 counter3 += _get_score_points(vote)
                 tmp = {'striker': counter1, 'winner': counter2, 'score': counter3, 'total': counter1+counter2+counter3 }
         points[u]=tmp
-    points_sorted = sorted(points, key=lambda x: (-points[x]['total']))
+    points_sorted = sorted(points, key=lambda x: (-points[x]['total'],-points[x]['score'],-points[x]['striker'],-points[x]['winner']))
     return render(request, 'results.html', {'points': points, 'points_sorted':points_sorted})
 
 def _valid_vote(vote_id):
