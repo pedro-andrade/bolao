@@ -20,6 +20,11 @@ def _get_local_match_time():
 def _editable(matchtime):
     return _get_local_match_time() < matchtime
 
+def _hide_votes(matchtime):
+    time = matchtime - timedelta(hours=1)
+    local_time = _get_local_match_time()
+    return local_time >= time and local_time < matchtime
+
 @login_required          
 def player(request):
     return render(request, 'player.html')    
@@ -55,7 +60,8 @@ def match_detail(request, match_id):
     votes = Vote.objects.all().filter(match=match_id)
     strikers = MatchStriker.objects.all().filter(match=match_id)
     uservote = Vote.objects.all().filter(match=match_id, user=request.user)      
-
+    isEditable = _editable(match.matchtime)
+    
 #in case we want to show only the votes that exist
 #    points = {}
 #    for v in votes:
@@ -71,7 +77,11 @@ def match_detail(request, match_id):
 #        points[v.user]=tmp
             
     points = {}
-    user = User.objects.all()
+    if _hide_votes(match.matchtime):
+        user = User.objects.all().filter(username=request.user)
+        messages.info(request, 'This match is about to start... votes of other players are currently hidden but you can still change your vote.')
+    else:
+        user = User.objects.all();
     for u in user:
         numVote = Vote.objects.filter(user=u, match=match_id).count()
         if numVote==0 and match.finish:
@@ -90,7 +100,7 @@ def match_detail(request, match_id):
             tmp = {'vote':vote, 'points_striker': counter1, 'points_winner': counter2, 'points_score': counter3, 'points_total': counter1+counter2+counter3 }
             points[u]=tmp
         
-    return render(request, 'match_detail.html', {'vote': votes, 'match':match, 'strikers':strikers, 'uservote':uservote, 'points': points})
+    return render(request, 'match_detail.html', {'vote': votes, 'match':match, 'strikers':strikers, 'uservote':uservote, 'points': points, 'isEditable':isEditable})
 
 @login_required    
 def results(request):
