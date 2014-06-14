@@ -125,9 +125,7 @@ def results(request):
                 counter3 += _get_score_points(vote)
                 tmp = {'striker': counter1, 'winner': counter2, 'score': counter3, 'total': counter1+counter2+counter3 }
         points[u]=tmp
-    print points
-    points_sorted = sorted(points, key=lambda x: (-points[x]['total']))
-    return render(request, 'results.html', {'points': points, 'points_sorted':points_sorted})
+    return render(request, 'results.html', {'points': points})
 
 def _valid_vote(vote_id):
     vote = Vote.objects.get(pk=vote_id)
