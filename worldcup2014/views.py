@@ -50,7 +50,7 @@ def match_index(request):
 
 @login_required          
 def match_past(request):
-    match_list = Match.objects.filter(matchtime__lt=_get_local_match_time()).order_by('matchtime')
+    match_list = Match.objects.filter(matchtime__lt=_get_local_match_time()).order_by('-matchtime')
     context = {'subtitle':'Past', 'match_list': match_list}
     return render(request, 'match_index.html', context)    
 
