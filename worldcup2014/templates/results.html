@@ -14,14 +14,18 @@
 	        <th>Score</th>
 	        <th>Total</th>
 	    </tr>
-	    {% for p, v in points.items %}
-	    <tr>
-	        <td>{{ p | capfirst }}</td>
-	        <td>{{ v.striker }}</td>
-	        <td>{{ v.winner }}</td>
-	        <td>{{ v.score }}</td>
-	        <td>{{ v.total }}</td>
-	    </tr>
+	    {% for key in points_sorted %}
+		    {% for p, v in points.items %}
+		    	{% if key == p %}
+			    <tr>
+			        <td>{{ p | capfirst }}</td>
+			        <td>{{ v.striker }}</td>
+			        <td>{{ v.winner }}</td>
+			        <td>{{ v.score }}</td>
+			        <td>{{ v.total }}</td>
+			    </tr>
+				{% endif %}
+	    	{% endfor %}
 	    {% endfor %}
 	</table>
 
