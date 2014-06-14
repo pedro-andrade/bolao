@@ -81,11 +81,11 @@ def match_detail(request, match_id):
         user = User.objects.all().filter(username=request.user)
         messages.info(request, 'This match is about to start... votes of other players are currently hidden but you can still change your vote.')
     else:
-        user = User.objects.all();
+        user = User.objects.all().order_by('username')
     for u in user:
         numVote = Vote.objects.filter(user=u, match=match_id).count()
         if numVote==0 and match.finish:
-            tmp = {'vote':None, 'points_striker': 0, 'points_winner': 0, 'points_score': 0, 'points_total': 0 }
+            tmp = {'user':u, 'vote':None, 'points_striker': 0, 'points_winner': 0, 'points_score': 0, 'points_total': 0 }
             points[u]=tmp
         elif numVote!=0:
             vote = Vote.objects.get(user=u, match=match_id)
@@ -97,10 +97,10 @@ def match_detail(request, match_id):
                 counter1 = _get_striker_points(vote)
                 counter2 = _get_winner_points(vote)
                 counter3 = _get_score_points(vote)
-            tmp = {'vote':vote, 'points_striker': counter1, 'points_winner': counter2, 'points_score': counter3, 'points_total': counter1+counter2+counter3 }
+            tmp = {'user':u, 'vote':vote, 'points_striker': counter1, 'points_winner': counter2, 'points_score': counter3, 'points_total': counter1+counter2+counter3 }
             points[u]=tmp
-        
-    return render(request, 'match_detail.html', {'vote': votes, 'match':match, 'strikers':strikers, 'uservote':uservote, 'points': points, 'isEditable':isEditable})
+    points_sorted = sorted(points, key=lambda x: (-points[x]['points_total'], points[x]['user']))
+    return render(request, 'match_detail.html', {'vote': votes, 'match':match, 'strikers':strikers, 'uservote':uservote, 'points': points, 'points_sorted':points_sorted, 'isEditable':isEditable})
 
 @login_required    
 def results(request):
@@ -125,7 +125,7 @@ def results(request):
                 counter3 += _get_score_points(vote)
                 tmp = {'striker': counter1, 'winner': counter2, 'score': counter3, 'total': counter1+counter2+counter3 }
         points[u]=tmp
-
+    print points
     return render(request, 'results.html', {'points': points})
 
 def _valid_vote(vote_id):

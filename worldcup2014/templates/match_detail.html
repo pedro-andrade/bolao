@@ -46,60 +46,65 @@
 		{% endif %}	
 		
 	</tr>
-	{% for p, v in points.items %}
-		<tr>
-			{% if not match.finish and isEditable %}
-				<td>
-				{% if user.username == p.username %}
-					<a href="{% url 'vote_update' v.vote.id %}">edit</a>
-				{% else %}	
-					-
-				{% endif %}	
-				</td>
-			{% endif %}	
-			
-			<td width="20%">{{ p | capfirst }}</td>
-			
-			<td width="20%">
-				{% if v.vote %}
-					{{ v.vote.striker }}
-				{% else %}
-					&nbsp;
-				{% endif %}		
-			</td>
-			
-			{% if match.finish %}
-				<td class="toRight">{{ v.points_striker }}</td>
-			{% endif %}	
-			
-			<td width="20%">
-				{% if v.vote %}
-					{{ v.vote.winner | capfirst }}
-				{% else %}
-					&nbsp;
-				{% endif %}		
-			</td>
-			
-			{% if match.finish %}
-				<td class="toRight">{{ v.points_winner }}</td>
-			{% endif %}	
-			
-			<td width="20%">
-				{% if v.vote %}
-					{{ v.vote.score }}
-				{% else %}
-					&nbsp;
-				{% endif %}		
-			</td>
-			
-			{% if match.finish %}
-				<td class="toRight">{{ v.points_score }}</td>
-			{% endif %}	
-			
-			{% if match.finish %}
-				<td class="toRight">{{ v.points_total }}</td>
-			{% endif %}	
-		</tr>
+
+	{% for key in points_sorted %}
+		{% for p, v in points.items %}
+	    	{% if key == p %}
+				<tr>
+					{% if not match.finish and isEditable %}
+						<td>
+						{% if user.username == p.username %}
+							<a href="{% url 'vote_update' v.vote.id %}">edit</a>
+						{% else %}	
+							-
+						{% endif %}	
+						</td>
+					{% endif %}	
+					
+					<td width="20%">{{ p | capfirst }}</td>
+					
+					<td width="20%">
+						{% if v.vote %}
+							{{ v.vote.striker }}
+						{% else %}
+							&nbsp;
+						{% endif %}		
+					</td>
+					
+					{% if match.finish %}
+						<td class="toRight">{{ v.points_striker }}</td>
+					{% endif %}	
+					
+					<td width="20%">
+						{% if v.vote %}
+							{{ v.vote.winner | capfirst }}
+						{% else %}
+							&nbsp;
+						{% endif %}		
+					</td>
+					
+					{% if match.finish %}
+						<td class="toRight">{{ v.points_winner }}</td>
+					{% endif %}	
+					
+					<td width="20%">
+						{% if v.vote %}
+							{{ v.vote.score }}
+						{% else %}
+							&nbsp;
+						{% endif %}		
+					</td>
+					
+					{% if match.finish %}
+						<td class="toRight">{{ v.points_score }}</td>
+					{% endif %}	
+					
+					{% if match.finish %}
+						<td class="toRight">{{ v.points_total }}</td>
+					{% endif %}	
+				</tr>
+			{% endif %}
+		{% endfor %}
 	{% endfor %}
     {% if not match.finish and not uservote %}
 		<tr><td colspan="5"><a href="{% url 'vote_add' match.id %}">Vote Now !!!</a></td></tr>
