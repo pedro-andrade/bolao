@@ -20,6 +20,11 @@ def _get_local_match_time():
 def _editable(matchtime):
     return _get_local_match_time() < matchtime
 
+def _hide_votes(matchtime):
+    time = matchtime - timedelta(hours=1)
+    local_time = _get_local_match_time()
+    return local_time >= time and local_time < matchtime
+
 @login_required          
 def player(request):
     return render(request, 'player.html')    
@@ -71,7 +76,11 @@ def match_detail(request, match_id):
 #        points[v.user]=tmp
             
     points = {}
-    user = User.objects.all()
+    if _hide_votes(match.matchtime):
+        user = User.objects.all().filter(username=request.user)
+        messages.info(request, 'This match is about to start... votes of other players are currently hidden but you can still change your vote.')
+    else:
+        user = User.objects.all();
     for u in user:
         numVote = Vote.objects.filter(user=u, match=match_id).count()
         if numVote==0 and match.finish:
