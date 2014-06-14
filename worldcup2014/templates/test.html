@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if match %}
+
+
+	{% load dictionary_extras %}
+	
+	
+	{% for key in points_sorted %}
+	    {#ttt {{ points|access:key }} <br>#}
+	    {{key}} {{ points|access:key|access:"vote" }} <br>
+	    
+	    
+		<tr>
+			{% if not match.finish and isEditable %}
+				<td>
+				{% if user.username == p.username %}
+					{#<a href="{% url 'vote_update' points|access:key|access:"vote"|access:"id" %}">edit</a>#}
+				{% else %}	
+					-
+				{% endif %}	
+				</td>
+			{% endif %}	
+			
+			<td width="20%">{{ key | capfirst }}</td>
+			
+			<td width="20%">
+				{% if points|access:key|access:"vote" %}
+					{{ points|access:key|access:"vote" }}
+				{% else %}
+					&nbsp;
+				{% endif %}		
+			</td>
+			
+			{% if match.finish %}
+				<td class="toRight">{{ points|access:key|access:"points_striker" }}</td>
+			{% endif %}	
+			
+			<td width="20%">
+				{% if points|access:key|access:"vote" %}
+					{#{{ points|access:key|access:"vote"|access:"winner" | capfirst }}#}
+				{% else %}
+					&nbsp;
+				{% endif %}		
+			</td>
+			
+			{% if match.finish %}
+				<td class="toRight">{{ points|access:key|access:"points_winner" }}</td>
+			{% endif %}	
+			
+			<td width="20%">
+				{% if points|access:key|access:"vote" %}
+					{#{{ points|access:key|access:"vote"|access:"score" }}#}
+				{% else %}
+					&nbsp;
+				{% endif %}		
+			</td>
+			
+			{% if match.finish %}
+				<td class="toRight">{{ points|access:key|access:"points_score" }}</td>
+			{% endif %}	
+			
+			{% if match.finish %}
+				<td class="toRight">{{ points|access:key|access:"points_total" }}</td>
+			{% endif %}	
+		</tr>
+	    
+	{% endfor %}
+
+{% else %}
+    <p>No match details available.</p>
+{% endif %}
+
+{% endblock %}
