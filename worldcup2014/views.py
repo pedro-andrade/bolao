@@ -60,7 +60,8 @@ def match_detail(request, match_id):
     votes = Vote.objects.all().filter(match=match_id)
     strikers = MatchStriker.objects.all().filter(match=match_id)
     uservote = Vote.objects.all().filter(match=match_id, user=request.user)      
-
+    isEditable = _editable(match.matchtime)
+    
 #in case we want to show only the votes that exist
 #    points = {}
 #    for v in votes:
@@ -99,7 +100,7 @@ def match_detail(request, match_id):
             tmp = {'vote':vote, 'points_striker': counter1, 'points_winner': counter2, 'points_score': counter3, 'points_total': counter1+counter2+counter3 }
             points[u]=tmp
         
-    return render(request, 'match_detail.html', {'vote': votes, 'match':match, 'strikers':strikers, 'uservote':uservote, 'points': points})
+    return render(request, 'match_detail.html', {'vote': votes, 'match':match, 'strikers':strikers, 'uservote':uservote, 'points': points, 'isEditable':isEditable})
 
 @login_required    
 def results(request):
