@@ -221,8 +221,8 @@ def vote_add(request, match_id):
 
 @login_required
 def match_update(request, match_id):
-    
-    if request.user.username != 'pedro' or request.user.username != 'teresa':
+    print request.user.username
+    if request.user.username != 'pedro' and request.user.username != 'teresa':
         messages.error(request, 'You can not update the match details')
         return redirect('match_index')
     
