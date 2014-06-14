@@ -45,13 +45,13 @@ def match_index(request):
             tmp = {'vote':vote, 'numVotes':numVotes}
         match_vote_list[m.id]=tmp
 
-    context = {'subtitle':'Next', 'match_list': match_list, 'match_vote_list': match_vote_list, 'path':request.path, 'time':_get_local_match_time()}
+    context = {'subtitle':'Next', 'reverseOrder': False, 'match_list': match_list, 'match_vote_list': match_vote_list, 'path':request.path, 'time':_get_local_match_time()}
     return render(request, 'match_index.html', context)    
 
 @login_required          
 def match_past(request):
     match_list = Match.objects.filter(matchtime__lt=_get_local_match_time()).order_by('-matchtime')
-    context = {'subtitle':'Past', 'match_list': match_list}
+    context = {'subtitle':'Past', 'reverseOrder': True, 'match_list': match_list}
     return render(request, 'match_index.html', context)    
 
 @login_required

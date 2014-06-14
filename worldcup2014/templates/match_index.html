@@ -5,7 +5,12 @@
 <h1>{{ subtitle }} Matches</h1>
 
 {% if match_list %}
-	{% regroup match_list|dictsortreversed:"matchtime" by matchtime|date:"l, d F Y" as matchByDay %}
+	{% if reverseOrder %}
+		{% regroup match_list|dictsortreversed:"matchtime" by matchtime|date:"l, d F Y" as matchByDay %}
+	{% else %}	
+		{% regroup match_list|dictsort:"matchtime" by matchtime|date:"l, d F Y" as matchByDay %}
+	{% endif %}
+
 	{% for matchDay in matchByDay %}
         <legend>{{ matchDay.grouper }}</legend>
 
