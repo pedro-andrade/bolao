@@ -15,23 +15,23 @@ body {
 	font-weight: bold;
 }
 
-.toCenter { 
+.table-striped toCenter { 
 	text-align: center; 
 }
 
-.table-bordered th.toRight { 
+.table-striped th.toRight { 
 	text-align: right; 
 }
 
-.table-bordered th.toCenter { 
+.table-striped th.toCenter { 
 	text-align: center; 
 }
 
-.table-bordered td.toRight { 
+.table-striped td.toRight { 
 	text-align: right; 
 }
 
-.table-bordered td.toCenter { 
+.table-striped td.toCenter { 
 	text-align: center; 
 }
 

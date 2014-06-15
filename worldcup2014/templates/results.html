@@ -3,10 +3,11 @@
 {% block content %}
 
 <h1>Results</h1>
+<hr>
 
 {% if points %}
-
-	<table id="metric-table" class="table table-striped table-bordered">
+<div width="50%">
+	<table id="metric-table" class="table table-condensed table-striped">
 	    <tr>
 	        <th></th>
 	        <th class="toRight">Total</th>
@@ -28,7 +29,7 @@
 	    	{% endfor %}
 	    {% endfor %}
 	</table>
-
+</div>
 {% endif %}
 
 {% endblock %}
