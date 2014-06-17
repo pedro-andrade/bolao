@@ -17,9 +17,9 @@
 			<tr>
 				<td width="20%">
 					{{ extra_vote.user | capfirst}}
-					{% if user.username == extra_vote.user %}
-						| <a href="{% url 'extra_vote_update' extra_vote.id %}">edit</a>
-					{% endif %}	
+					{#{% if user.username == extra_vote.user %}#}
+						{#| <a href="{% url 'extra_vote_update' extra_vote.id %}">edit</a>#}
+					{#{% endif %}#}
 				</td>
 				<td width="20%">{{ extra_vote.winner | capfirst}}</td>
 				<td width="40%">{{ extra_vote.striker }}</td>

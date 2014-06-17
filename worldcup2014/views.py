@@ -259,6 +259,9 @@ def match_add(request):
 @login_required
 def extra_vote_update(request, extra_vote_id):
         
+    messages.error(request, 'You can not update anymore the extra vote')
+    return redirect('extra_vote')
+    
     try:
         extra_vote = ExtraVote.objects.get(pk=extra_vote_id)
     except Exception:
@@ -281,6 +284,9 @@ def extra_vote_update(request, extra_vote_id):
 
 @login_required
 def extra_vote_add(request):
+
+    messages.error(request, 'You can not add anymore the extra vote')
+    return redirect('extra_vote')
         
     try:
         isVote = ExtraVote.objects.get(user=request.user)
@@ -311,6 +317,8 @@ def rules(request):
 def extra_vote(request):
     extra_vote_list = ExtraVote.objects.all().filter().order_by('user')
     uservote = ExtraVote.objects.all().filter(user=request.user)
+    messages.info(request, 'You can not add/update anymore the extra vote')
+    
     return render(request, 'extra_vote.html', {'extra_vote_list': extra_vote_list, 'uservote':uservote})    
 
 @login_required          
