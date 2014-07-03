@@ -137,6 +137,7 @@ def _valid_vote(vote_id):
         return False
         
 def _get_striker_points(vote):
+    match = vote.match
     striker = MatchStriker.objects.filter(match=vote.match)
     for s in striker:
         if s.striker == vote.striker:
