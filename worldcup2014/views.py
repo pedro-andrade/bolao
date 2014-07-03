@@ -140,20 +140,29 @@ def _get_striker_points(vote):
     striker = MatchStriker.objects.filter(match=vote.match)
     for s in striker:
         if s.striker == vote.striker:
-            return 2
+            if match.stage == "groups":
+                return 2
+            else:
+                return 4
     return 0
 
 def _get_winner_points(vote):
     match = vote.match
     if match.winner == vote.winner:
-        return 1
+        if match.stage == "groups":
+            return 1
+        else:
+            return 2
     else:
         return 0
 
 def _get_score_points(vote):
     match = vote.match
     if match.score == vote.score:
-        return 2
+        if match.stage == "groups":
+            return 2
+        else:
+            return 4
     else:
         return 0
 
