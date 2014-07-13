@@ -14,6 +14,7 @@
 	        <th class="toRight">Score</th>
 	        <th class="toRight">Striker</th>
 	        <th class="toRight">Winner</th>
+	        <th class="toRight">Extra</th>
 	    </tr>
 	    {% for key in points_sorted %}
 		    {% for p, v in points.items %}
@@ -24,6 +25,7 @@
 			        <td class="toRight">{{ v.score }}</td>
 			        <td class="toRight">{{ v.striker }}</td>
 			        <td class="toRight">{{ v.winner }}</td>
+			        <td class="toRight">{{ v.extra }}</td>
 			    </tr>
 				{% endif %}
 	    	{% endfor %}

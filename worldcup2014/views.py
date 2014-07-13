@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User 
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.db.models import Count, Max
 
 from worldcup2014.models import Match, MatchStriker, Vote, ExtraVote, Comment
 from worldcup2014.forms import VoteForm, MatchForm, ExtraVoteForm, CommentForm
@@ -107,6 +108,19 @@ def results(request):
     #TODO only votes of match flagged as finish in the database (finish means ready for the calculation of the results otherwise we could use the matchtime field)
     points = {}
     user = User.objects.all().order_by('username')
+
+    wc_winner = Match.objects.get(pk=64).winner
+    print wc_winner
+
+    wc_strikers = MatchStriker.objects.values('striker').annotate(dcount=Count('striker')).order_by('-dcount')[:3]
+    num_goals = 0
+    wc_striker = []
+    for wcs in wc_strikers:
+        if num_goals==0 or num_goals==wcs['dcount']:
+            wc_striker.append(wcs['striker'])
+            num_goals=wcs['dcount']
+    print wc_striker
+
     for u in user:
         counter1 = 0
         counter2 = 0
@@ -123,7 +137,8 @@ def results(request):
                 counter1 += _get_striker_points(vote)
                 counter2 += _get_winner_points(vote)
                 counter3 += _get_score_points(vote)
-                tmp = {'striker': counter1, 'winner': counter2, 'score': counter3, 'total': counter1+counter2+counter3 }
+            extra = _get_extra_points(u, wc_winner, wc_striker)
+            tmp = {'striker': counter1, 'winner': counter2, 'score': counter3, 'extra': extra, 'total': counter1+counter2+counter3+extra }
         points[u]=tmp
     points_sorted = sorted(points, key=lambda x: (-points[x]['total'],-points[x]['score'],-points[x]['striker'],-points[x]['winner']))
     return render(request, 'results.html', {'points': points, 'points_sorted':points_sorted})
@@ -135,6 +150,15 @@ def _valid_vote(vote_id):
         return True
     else:
         return False
+
+def _get_extra_points(user, wc_winner, wc_striker):
+    pts = 0 
+    extra = ExtraVote.objects.get(user=user)
+    if extra.winner == wc_winner:
+        pts += 5
+    if extra.striker.id in wc_striker:
+        pts += 5
+    return pts
         
 def _get_striker_points(vote):
     match = vote.match
