@@ -16,7 +16,8 @@ def index(request):
     return HttpResponseRedirect('/bolao/login')
 
 def _get_local_match_time():
-    return datetime.now() - timedelta(hours=5)
+    #return datetime.now() + timedelta(hours=2)
+    return datetime.now()
 
 def _editable(matchtime):
     return _get_local_match_time() < matchtime
@@ -109,7 +110,7 @@ def results(request):
     points = {}
     user = User.objects.all().order_by('username')
 
-    wc_winner = Match.objects.get(pk=64).winner
+    wc_winner = Match.objects.get(pk=53).winner
     print wc_winner
 
     wc_strikers = MatchStriker.objects.values('striker').annotate(dcount=Count('striker')).order_by('-dcount')[:3]
@@ -151,9 +152,10 @@ def _valid_vote(vote_id):
     else:
         return False
 
-def _get_extra_points(user, wc_winner, wc_striker):
+def _get_extra_points(user1, wc_winner, wc_striker):
     pts = 0 
-    extra = ExtraVote.objects.get(user=user)
+    print user1
+    extra = ExtraVote.objects.get(user=user1)
     if extra.winner == wc_winner:
         pts += 5
     if extra.striker.id in wc_striker:
@@ -319,8 +321,8 @@ def extra_vote_update(request, extra_vote_id):
 @login_required
 def extra_vote_add(request):
 
-    messages.error(request, 'You can not add anymore the extra vote')
-    return redirect('extra_vote')
+    #messages.error(request, 'You can not add anymore the extra vote')
+    #return redirect('extra_vote')
         
     try:
         isVote = ExtraVote.objects.get(user=request.user)
@@ -351,7 +353,7 @@ def rules(request):
 def extra_vote(request):
     extra_vote_list = ExtraVote.objects.all().filter().order_by('user')
     uservote = ExtraVote.objects.all().filter(user=request.user)
-    messages.info(request, 'You can not add/update anymore the extra vote')
+    #messages.info(request, 'You can not add/update anymore the extra vote')
     
     return render(request, 'extra_vote.html', {'extra_vote_list': extra_vote_list, 'uservote':uservote})    
 
