@@ -105,16 +105,6 @@ CREATE TABLE `users` (
   PRIMARY KEY  (`user_code`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `users`
---
-
-
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
-LOCK TABLES `users` WRITE;
-INSERT INTO `users` VALUES (1,'pedro','ask4more',37),(2,'teresa','fofinha',36),(3,'ricardo','fodete',35),(4,'winzip','ramado',35),(5,'sergio','gansolino',31),(6,'msbranco','ru4real',33),(7,'brazuca','palhaco',0),(8,'huguinho','cona',3);
-UNLOCK TABLES;
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 --
 -- Table structure for table `votes`
