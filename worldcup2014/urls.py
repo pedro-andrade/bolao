@@ -29,6 +29,8 @@ urlpatterns = patterns('',
     
     url(r'^rules/$', views.rules, name='rules'),    
     
+    url(r'^hall_of_fame/$', views.hall_of_fame, name='hall_of_fame'),    
+    
     url(r'^extra/$', views.extra_vote, name='extra_vote'),    
     
     url(r'^extra/update/(?P<extra_vote_id>\d+)/$', views.extra_vote_update, name='extra_vote_update'),    

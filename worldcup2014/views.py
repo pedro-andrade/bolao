@@ -350,6 +350,10 @@ def rules(request):
     return render(request, 'rules.html')    
 
 @login_required          
+def hall_of_fame(request):
+    return render(request, 'hall_of_fame.html')    
+
+@login_required          
 def extra_vote(request):
     extra_vote_list = ExtraVote.objects.all().filter().order_by('user')
     uservote = ExtraVote.objects.all().filter(user=request.user)
