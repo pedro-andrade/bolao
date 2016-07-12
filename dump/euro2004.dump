@@ -324,17 +324,6 @@ CREATE TABLE `users` (
   PRIMARY KEY  (`user_code`)
 ) TYPE=MyISAM AUTO_INCREMENT=8 ;
 
-#
-# Dumping data for table `users`
-#
-
-INSERT INTO `users` (`user_code`, `user_name`, `user_password`, `user_pts`) VALUES (1, 'pma', 'ask4more', 81),
-(2, 'rjmelo', 'fodete', 69),
-(3, 'brazuca', 'palhaco', 74),
-(4, 'winzip', 'winzip', 56),
-(5, 'msbranco', 'ru4real9', 67),
-(6, 'huguinho', 'cona', 67),
-(7, 'teresa', 'fofinha', 69);
 
 # --------------------------------------------------------
 
