@@ -637,24 +637,6 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`user_code`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=14 ;
 
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`user_code`, `user_name`, `user_password`, `user_pts`) VALUES
-(1, 'pedro', 'andrade', 43),
-(2, 'teresa', 'fofinha', 37),
-(3, 'ricardo', 'fodete', 39),
-(4, 'miguel', 'ru4real', 44),
-(5, 'hugo', 'cona', 25),
-(6, 'rocha', 'planador', 41),
-(7, 'assia', 'aveixela', 35),
-(8, 'omar', 'chile', 34),
-(9, 'mike', 'gocoxo', 36),
-(10, 'vania', 'vanita12', 43),
-(11, 'nuno', 'elias2012', 38),
-(12, 'anki', '2012morges', 46),
-(13, 'helena', 'gosweden', 34);
 
 -- --------------------------------------------------------
 
