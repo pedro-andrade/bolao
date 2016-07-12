@@ -140,16 +140,6 @@ CREATE TABLE `users` (
 SET character_set_client = @saved_cs_client;
 
 --
--- Dumping data for table `users`
---
-
-LOCK TABLES `users` WRITE;
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'pedro','ask4more',84),(2,'teresa','fofinha',75),(3,'ricardo','fodete',74),(4,'winzip','ramado',86),(5,'sergio','gansolino',79),(6,'msbranco','ru4real',0),(7,'brazuca','palhaco',0),(8,'huguinho','cona',3),(9,'rocha','ricardo',10);
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `votes`
 --
 
