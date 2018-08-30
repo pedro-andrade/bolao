@@ -110,16 +110,20 @@ def results(request):
     points = {}
     user = User.objects.all().order_by('username')
 
-    wc_winner = Match.objects.get(pk=53).winner
+    wc_winner = Match.objects.get(pk=64).winner
+    wc_winner = 'france'
+    #wc_winner = 'xxx'
     print wc_winner
 
-    wc_strikers = MatchStriker.objects.values('striker').annotate(dcount=Count('striker')).order_by('-dcount')[:3]
-    num_goals = 0
-    wc_striker = []
-    for wcs in wc_strikers:
-        if num_goals==0 or num_goals==wcs['dcount']:
-            wc_striker.append(wcs['striker'])
-            num_goals=wcs['dcount']
+    #wc_strikers = MatchStriker.objects.values('striker').annotate(dcount=Count('striker')).order_by('-dcount')[:3]
+    #num_goals = 0
+    #wc_striker = []
+    #for wcs in wc_strikers:
+    #    if num_goals==0 or num_goals==wcs['dcount']:
+    #        wc_striker.append(wcs['striker'])
+    #        num_goals=wcs['dcount']
+    wc_striker = 'Harry Kane'
+    #wc_striker = 'xxx'
     print wc_striker
 
     for u in user:
@@ -154,11 +158,10 @@ def _valid_vote(vote_id):
 
 def _get_extra_points(user1, wc_winner, wc_striker):
     pts = 0 
-    print user1
     extra = ExtraVote.objects.get(user=user1)
-    if extra.winner == wc_winner:
+    if extra.winner.name == wc_winner:
         pts += 5
-    if extra.striker.id in wc_striker:
+    if extra.striker.name == wc_striker:
         pts += 5
     return pts
         
@@ -295,6 +298,7 @@ def match_add(request):
 @login_required
 def extra_vote_update(request, extra_vote_id):
         
+    # remove comments after the extra vote deadline
     messages.error(request, 'You can not update anymore the extra vote')
     return redirect('extra_vote')
     
