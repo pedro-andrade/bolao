@@ -1,0 +1,12 @@
+#!/bin/sh
+
+export IFS=$'\n'
+
+TEAM=$1
+
+cat wc2018_players | grep -i -A30 ===$TEAM=== | grep player | cut -d '[' -f3 | cut -d ']' -f 1 | cut -d '(' -f1 | cut -d '|' -f1 | awk '{$1=$1;print}' > list
+for p in $(cat list); do echo "INSERT INTO worldcup2014_player VALUES (NULL, '$p', (SELECT id FROM worldcup2014_team where name='$TEAM'));"; done > import.sql
+rm list
+
+echo "Players to be imported: " `cat import.sql | wc -l`
+cat import.sql

@@ -1,0 +1,5 @@
+sudo yum install git
+git clone https://github.com/pedro-andrade/bolao.git
+sudo pip install Django==1.8.19
+sqlite3 db.sqlite3 < dump/euro_2016.schema 
+sudo python manage.py runserver 0:80
